@@ -11,24 +11,58 @@
 main{max-width:520px;margin:0 auto}.brand{background:var(--green);color:white;border-radius:20px;padding:22px 20px;margin-bottom:16px}.eyebrow{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;opacity:.85}.brand h1{font-size:1.55rem;line-height:1.2;margin:7px 0}.brand p{margin:0;opacity:.9;font-size:.93rem}
 .card{background:var(--white);border:1px solid var(--line);border-radius:18px;padding:18px;margin-bottom:14px;box-shadow:0 3px 12px #17332b08}.card h2{font-size:1.05rem;margin:0 0 14px}
 label{display:block;font-size:.9rem;font-weight:650;margin:13px 0 6px}input{display:block;width:100%;font:inherit;font-size:1.05rem;padding:13px 14px;border:1px solid #b9cbc3;border-radius:12px;background:#fff;color:var(--ink);outline:none}input:focus{border-color:var(--green);box-shadow:0 0 0 3px #176b5520}
-button{font:inherit;font-weight:700;border:0;border-radius:12px;min-height:48px;padding:12px 16px;cursor:pointer}.primary{width:100%;background:var(--green);color:white;margin-top:18px}.secondary{background:var(--green2);color:var(--green);flex:1}.actions{display:flex;gap:10px;margin-top:12px}.result{display:none}.result.show{display:block}.result-top{background:var(--green2);border-radius:13px;padding:14px;margin-bottom:14px}.result-top small{display:block;color:var(--muted);font-weight:600}.big{font-size:1.8rem;font-weight:800;color:var(--green);line-height:1.25;margin-top:3px}.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px}.stat{border:1px solid var(--line);border-radius:12px;padding:12px}.stat span{display:block;font-size:.78rem;color:var(--muted);margin-bottom:5px}.stat strong{font-size:1rem;overflow-wrap:anywhere}.details{font-size:.91rem;line-height:1.55;margin-top:14px}.details div{margin:5px 0}.note{font-size:.82rem;color:var(--muted);line-height:1.45}.error{color:var(--danger);font-size:.9rem;margin-top:10px;display:none}.error.show{display:block}.footer{text-align:center;font-size:.78rem;color:var(--muted);padding:8px 12px}
+button{font:inherit;font-weight:700;border:0;border-radius:12px;min-height:48px;padding:12px 16px;cursor:pointer}.primary{width:100%;background:var(--green);color:white;margin-top:18px}.secondary{background:var(--green2);color:var(--green);flex:1}.actions{display:flex;gap:10px;margin-top:12px}.result{display:none}.result.show{display:block}.result-top{background:var(--green2);border-radius:13px;padding:14px;margin-bottom:14px}.result-top small{display:block;color:var(--muted);font-weight:600}.big{font-size:1.8rem;font-weight:800;color:var(--green);line-height:1.25;margin-top:3px}.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px}.stat{border:1px solid var(--line);border-radius:12px;padding:12px}.stat span{display:block;font-size:.78rem;color:var(--muted);margin-bottom:5px}.stat strong{font-size:1rem;overflow-wrap:anywhere}.details{font-size:.91rem;line-height:1.55;margin-top:14px}.details div{margin:5px 0}.note{font-size:.82rem;color:var(--muted);line-height:1.45}.error{color:var(--danger);font-size:.9rem;margin-top:10px;display:none}.error.show{display:block}.rate-choice{display:none}.rate-choice.show{display:block}.rate-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}.rate-actions button{min-height:48px}.rate-custom{display:none;margin-top:12px}.rate-custom.show{display:block}.rate-custom input{margin-bottom:10px}.footer{text-align:center;font-size:.78rem;color:var(--muted);padding:8px 12px}
+
+.history-list{display:grid;gap:10px}
+.history-item{border:1px solid var(--line);border-radius:13px;padding:13px;background:#fff}
+.history-tank{font-size:1.08rem;font-weight:850;color:var(--green);overflow-wrap:anywhere;margin-bottom:4px}
+.history-meta{font-size:.78rem;color:var(--muted);margin-bottom:9px}
+.history-summary{font-size:.9rem;line-height:1.5}
+.history-summary div{margin:3px 0}
+.history-actions{display:flex;gap:8px;margin-top:10px}
+.history-actions button{min-height:38px;padding:8px 11px;font-size:.86rem}
+.danger{background:#fbe9e7;color:#922b21}
+.history-empty{font-size:.9rem;color:var(--muted);line-height:1.5}
+
 @media(min-width:420px){body{padding-top:28px}.brand{padding:26px}}
 </style>
 </head>
 <body><main>
 <header class="brand"><div class="eyebrow">Samaria · Aquicultura</div><h1>Calculadora de Ração</h1><p>Estimativa baseada na tabela alimentar fornecida.</p></header>
 <section class="card"><h2>Dados do lote</h2>
+<label for="tanque">Nome ou identificação do tanque</label><input id="tanque" type="text" maxlength="80" placeholder="Ex.: TE12, Tanque 3 (opcional)">
 <label for="quantidade">Quantidade de peixes</label><input id="quantidade" type="number" inputmode="numeric" min="1" step="1" placeholder="Ex.: 1000">
 <label for="peso">Peso total (gramas)</label><input id="peso" type="text" inputmode="decimal" placeholder="Ex.: 1800">
 <label for="tratos">Tratos por dia</label><input id="tratos" type="number" inputmode="numeric" min="1" step="1" placeholder="Ex.: 4">
 <button class="primary" id="calcular">Calcular ração</button><div class="error" id="erro" role="alert"></div>
 </section>
+<section class="card rate-choice" id="decisaoTaxa" aria-live="polite">
+<h2>Taxa de alimentação</h2>
+<p id="perguntaTaxa">A tabela recomenda uma taxa de —. Deseja utilizá-la?</p>
+<div class="rate-actions"><button class="primary" id="usarTaxa" style="margin-top:0">Sim, usar a taxa</button><button class="secondary" id="trocarTaxa">Usar outra taxa</button></div>
+<div class="rate-custom" id="taxaPersonalizada">
+<label for="novaTaxa">Digite a taxa desejada (%)</label><input id="novaTaxa" type="text" inputmode="decimal" placeholder="Ex.: 10">
+<p class="note">Informe somente o número da porcentagem. A ração será recalculada com essa taxa.</p>
+<button class="primary" id="aplicarTaxa" style="margin-top:0">Calcular com esta taxa</button>
+</div>
+<div class="error" id="erroTaxa" role="alert"></div>
+</section>
 <section class="card result" id="resultado" aria-live="polite"><h2>Resultado</h2>
+<div class="details" style="margin-top:0;margin-bottom:12px"><div><b>Tanque:</b> <span id="nomeTanque">Não identificado</span></div></div>
 <div class="result-top"><small>Ração recomendada por dia</small><div class="big" id="diaria">—</div></div>
-<div class="stats"><div class="stat"><span>Por trato</span><strong id="porTrato">—</strong></div><div class="stat"><span>Taxa da tabela</span><strong id="taxa">—</strong></div><div class="stat"><span>Peso médio por peixe</span><strong id="medio">—</strong></div><div class="stat"><span>Número de tratos</span><strong id="numTratos">—</strong></div></div>
+<div class="stats"><div class="stat"><span>Por trato</span><strong id="porTrato">—</strong></div><div class="stat"><span>Taxa utilizada</span><strong id="taxa">—</strong></div><div class="stat"><span>Peso médio por peixe</span><strong id="medio">—</strong></div><div class="stat"><span>Número de tratos</span><strong id="numTratos">—</strong></div></div>
 <div class="details"><div><b>Fase:</b> <span id="fase"></span></div><div><b>Característica da ração:</b> <span id="caracteristica"></span></div><div><b>Faixa de peso na tabela:</b> <span id="faixa"></span></div></div>
 <div class="actions"><button class="secondary" id="novo">Novo cálculo</button><button class="secondary" id="info">Informações</button></div>
 </section>
+
+<section class="card" id="historicoCard">
+<h2>Histórico de cálculos</h2>
+<p class="note">Os cálculos concluídos ficam salvos neste navegador e neste aparelho. O nome do tanque aparece primeiro em cada registro.</p>
+<div id="historico" class="history-list"><p class="history-empty">Nenhum cálculo salvo ainda.</p></div>
+<div class="actions"><button class="secondary" id="exportarHistorico">Exportar histórico</button><button class="danger" id="limparHistorico">Apagar histórico</button></div>
+<p class="note">O histórico não é sincronizado automaticamente com outros celulares ou navegadores. Exporte uma cópia se precisar guardá-lo.</p>
+</section>
+
 <section class="card"><h2>Importante</h2><p class="note">O resultado segue a taxa e as faixas da planilha alimentar da Samaria incorporadas nesta versão. A tabela considera condições ideais. Confirme se a espécie, a fase e as condições de cultivo correspondem ao seu lote; esta ferramenta não substitui a orientação técnica.</p></section>
 <div class="footer">Calculadora de Ração · versão inicial para testes</div>
 </main>
@@ -36,23 +70,70 @@ button{font:inherit;font-weight:700;border:0;border-radius:12px;min-height:48px;
 const tabela = [{"minimo": 0.5, "maximo": 1.5, "caracteristica": "Pó", "fase": "Inicial", "taxa": 14}, {"minimo": 1.5, "maximo": 3, "caracteristica": "Ext. (1,2mm)", "fase": "Inicial", "taxa": 13}, {"minimo": 3, "maximo": 5.5, "caracteristica": "Ext. (1,2mm)", "fase": "Inicial", "taxa": 12}, {"minimo": 5.5, "maximo": 9, "caracteristica": "Ext. (1,8mm)", "fase": "Inicial", "taxa": 11}, {"minimo": 9, "maximo": 15, "caracteristica": "Ext. (1,8mm)", "fase": "Inicial", "taxa": 10}, {"minimo": 15, "maximo": 23, "caracteristica": "Ext. (2-3mm)", "fase": "Inicial", "taxa": 9}, {"minimo": 23, "maximo": 33, "caracteristica": "Ext. (2-3mm)", "fase": "Juvenil", "taxa": 7}, {"minimo": 33, "maximo": 45, "caracteristica": "Ext. (2-3mm)", "fase": "Juvenil", "taxa": 6}, {"minimo": 45, "maximo": 60, "caracteristica": "Ext. (3-4mm)", "fase": "Juvenil", "taxa": 5.5}, {"minimo": 60, "maximo": 80, "caracteristica": "Ext. (3-4mm)", "fase": "Juvenil", "taxa": 5}, {"minimo": 80, "maximo": 105, "caracteristica": "Ext. (3-4mm)", "fase": "Juvenil", "taxa": 4.8}, {"minimo": 105, "maximo": 135, "caracteristica": "Ext. (4-6mm)", "fase": "Crescimento", "taxa": 4.6}, {"minimo": 135, "maximo": 170, "caracteristica": "Ext. (4-6mm)", "fase": "Crescimento", "taxa": 4.2}, {"minimo": 170, "maximo": 210, "caracteristica": "Ext. (4-6mm)", "fase": "Crescimento", "taxa": 3.8}, {"minimo": 210, "maximo": 255, "caracteristica": "Ext. (4-6mm)", "fase": "Crescimento", "taxa": 3.6}, {"minimo": 255, "maximo": 305, "caracteristica": "Ext. (4-6mm)", "fase": "Crescimento", "taxa": 3.4}, {"minimo": 305, "maximo": 355, "caracteristica": "Ext. (4-6mm)", "fase": "Crescimento", "taxa": 3}, {"minimo": 355, "maximo": 405, "caracteristica": "Ext. (4-6mm)", "fase": "Crescimento", "taxa": 2.7}, {"minimo": 405, "maximo": 455, "caracteristica": "Ext. (4-6mm)", "fase": "Crescimento", "taxa": 2.5}, {"minimo": 455, "maximo": 505, "caracteristica": "Ext. (4-6mm)", "fase": "Crescimento", "taxa": 2.4}, {"minimo": 505, "maximo": 555, "caracteristica": "Ext. (4-6mm)", "fase": "Crescimento", "taxa": 2.2}, {"minimo": 555, "maximo": 605, "caracteristica": "Ext. (6-8mm)", "fase": "Engorda", "taxa": 2.1}, {"minimo": 605, "maximo": 655, "caracteristica": "Ext. (6-8mm)", "fase": "Engorda", "taxa": 2}, {"minimo": 655, "maximo": 705, "caracteristica": "Ext. (6-8mm)", "fase": "Engorda", "taxa": 1.8}, {"minimo": 705, "maximo": 755, "caracteristica": "Ext. (6-8mm)", "fase": "Engorda", "taxa": 1.7}, {"minimo": 755, "maximo": 805, "caracteristica": "Ext. (6-8mm)", "fase": "Engorda", "taxa": 1.6}, {"minimo": 805, "maximo": 855, "caracteristica": "Ext. (6-8mm)", "fase": "Engorda", "taxa": 1.5}, {"minimo": 855, "maximo": 905, "caracteristica": "Ext. (6-8mm)", "fase": "Engorda", "taxa": 1.4}, {"minimo": 905, "maximo": 955, "caracteristica": "Ext. (6-8mm)", "fase": "Engorda", "taxa": 1.4}, {"minimo": 955, "maximo": 1005, "caracteristica": "Ext. (6-8mm)", "fase": "Engorda", "taxa": 1.3}, {"minimo": 1005, "maximo": 1055, "caracteristica": "Ext. (6-8mm)", "fase": "Engorda", "taxa": 1.25}, {"minimo": 1055, "maximo": 1105, "caracteristica": "Ext. (6-8mm)", "fase": "Engorda", "taxa": 1.2}];
 const $ = id => document.getElementById(id);
 const fmt = n => n.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
-function mostrarErro(msg){$('erro').textContent=msg;$('erro').classList.add('show');$('resultado').classList.remove('show')}
+let calculoPendente = null;
+function mostrarErro(msg){$('erro').textContent=msg;$('erro').classList.add('show');$('resultado').classList.remove('show');$('decisaoTaxa').classList.remove('show')}
 function calcular(){
- $('erro').classList.remove('show');
+ $('erro').classList.remove('show'); $('erroTaxa').classList.remove('show');
  const quantidade=Number($('quantidade').value.trim());
  const pesoTexto=$('peso').value.trim().replace(/\s/g,'').replace(',','.');
  const pesoTotal=Number(pesoTexto);
  const tratos=Number($('tratos').value.trim());
- if(!Number.isInteger(quantidade)||quantidade<=0||!Number.isFinite(pesoTotal)||pesoTotal<=0||!Number.isInteger(tratos)||tratos<=0){mostrarErro('Informe valores numéricos válidos maiores que zero nos três campos.');return}
+ if(!Number.isInteger(quantidade)||quantidade<=0||!Number.isFinite(pesoTotal)||pesoTotal<=0||!Number.isInteger(tratos)||tratos<=0){mostrarErro('Informe quantidade, peso total e tratos por dia com valores numéricos válidos maiores que zero.');return}
  const medio=pesoTotal/quantidade;
  const rec=tabela.find(x=>medio>=x.minimo&&medio<x.maximo);
  if(!rec){mostrarErro(`A tabela não possui uma faixa para o peso médio de ${fmt(medio)} g. Confira os limites da tabela.`);return}
  if(typeof rec.taxa!=='number'||rec.taxa<=0){mostrarErro('A taxa de alimentação não foi encontrada corretamente na tabela.');return}
- const diaria=pesoTotal*rec.taxa/100; const porTrato=diaria/tratos;
- $('diaria').textContent=fmt(diaria)+' g';$('porTrato').textContent=fmt(porTrato)+' g';$('taxa').textContent=String(rec.taxa).replace('.',',')+'%';$('medio').textContent=fmt(medio)+' g';$('numTratos').textContent=String(tratos);$('fase').textContent=rec.fase??'Não informada';$('caracteristica').textContent=rec.caracteristica??'Não informada';$('faixa').textContent=fmt(rec.minimo)+' a '+fmt(rec.maximo)+' g';$('resultado').classList.add('show');
+ calculoPendente={quantidade,pesoTotal,tratos,medio,rec,tanque:$('tanque').value.trim()||'Não identificado'};
+ $('resultado').classList.remove('show');
+ $('perguntaTaxa').textContent=`Para o tanque ${calculoPendente.tanque}, o peso médio é ${fmt(medio)} g por peixe. A tabela recomenda ${String(rec.taxa).replace('.',',')}% de alimentação. Deseja usar essa porcentagem?`;
+ $('usarTaxa').textContent=`Sim, usar ${String(rec.taxa).replace('.',',')}%`;
+ $('taxaPersonalizada').classList.remove('show'); $('erroTaxa').classList.remove('show'); $('novaTaxa').value='';
+ $('decisaoTaxa').classList.add('show'); $('decisaoTaxa').scrollIntoView({behavior:'smooth',block:'start'});
 }
+function mostrarResultado(taxaUsada, origem){
+ if(!calculoPendente)return;
+ if(calculoPendente.salvo)return;
+ calculoPendente.salvo=true;
+ const {pesoTotal,tratos,medio,rec,tanque}=calculoPendente;
+ const diaria=pesoTotal*taxaUsada/100; const porTrato=diaria/tratos;
+ $('nomeTanque').textContent=tanque;
+ $('diaria').textContent=fmt(diaria)+' g';$('porTrato').textContent=fmt(porTrato)+' g';$('taxa').textContent=String(taxaUsada).replace('.',',')+'%';$('medio').textContent=fmt(medio)+' g';$('numTratos').textContent=String(tratos);$('fase').textContent=rec.fase??'Não informada';$('caracteristica').textContent=rec.caracteristica??'Não informada';$('faixa').textContent=fmt(rec.minimo)+' a '+fmt(rec.maximo)+' g';
+ let origemEl=document.getElementById('origemTaxa');
+ if(!origemEl){origemEl=document.createElement('div');origemEl.id='origemTaxa';origemEl.className='note';$('taxa').parentElement.appendChild(origemEl)}
+ origemEl.textContent=origem;
+ $('decisaoTaxa').classList.remove('show');$('resultado').classList.add('show');registrarCalculo(taxaUsada);$('resultado').scrollIntoView({behavior:'smooth',block:'start'});
+}
+$('usarTaxa').addEventListener('click',()=>{if(calculoPendente)mostrarResultado(calculoPendente.rec.taxa,'Taxa recomendada pela tabela Samaria.')});
+$('trocarTaxa').addEventListener('click',()=>{$('taxaPersonalizada').classList.add('show');$('erroTaxa').classList.remove('show');$('novaTaxa').focus()});
+$('aplicarTaxa').addEventListener('click',()=>{
+ const texto=$('novaTaxa').value.trim().replace(/\s/g,'').replace(',','.');
+ const taxa=Number(texto);
+ if(!texto||!Number.isFinite(taxa)||taxa<=0||taxa>100){$('erroTaxa').textContent='Digite uma porcentagem maior que 0 e menor ou igual a 100.';$('erroTaxa').classList.add('show');return}
+ mostrarResultado(taxa,`Taxa personalizada informada pelo usuário (a tabela recomendava ${String(calculoPendente.rec.taxa).replace('.',',')}%).`);
+});
 $('calcular').addEventListener('click',calcular);
 ['quantidade','peso','tratos'].forEach(id=>$(id).addEventListener('keydown',e=>{if(e.key==='Enter')calcular()}));
-$('novo').addEventListener('click',()=>{['quantidade','peso','tratos'].forEach(id=>$(id).value='');$('resultado').classList.remove('show');$('erro').classList.remove('show');$('quantidade').focus();window.scrollTo({top:0,behavior:'smooth'})});
+$('novo').addEventListener('click',()=>{['tanque','quantidade','peso','tratos','novaTaxa'].forEach(id=>$(id).value='');$('resultado').classList.remove('show');$('decisaoTaxa').classList.remove('show');$('taxaPersonalizada').classList.remove('show');$('erro').classList.remove('show');$('erroTaxa').classList.remove('show');calculoPendente=null;$('quantidade').focus();window.scrollTo({top:0,behavior:'smooth'})});
 $('info').addEventListener('click',()=>alert('A taxa é consultada pela faixa de peso médio individual na tabela da Samaria. O cálculo é: peso total × taxa (%) ÷ 100. A ração por trato é a ração diária dividida pelo número de tratos. Confira sempre a recomendação técnica e as condições reais do cultivo.'));
+
+const CHAVE_HISTORICO='samaria_calculadora_historico_v1';
+function lerHistorico(){try{const dados=JSON.parse(localStorage.getItem(CHAVE_HISTORICO)||'[]');return Array.isArray(dados)?dados:[]}catch(e){return []}}
+function salvarHistorico(lista){try{localStorage.setItem(CHAVE_HISTORICO,JSON.stringify(lista));return true}catch(e){alert('Não foi possível salvar o histórico neste navegador. Verifique as configurações de armazenamento.');return false}}
+function escaparHtml(valor){return String(valor??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function renderizarHistorico(){
+ const lista=lerHistorico(),area=$('historico');
+ if(!lista.length){area.innerHTML='<p class="history-empty">Nenhum cálculo salvo ainda. Os registros aparecerão aqui após concluir um cálculo.</p>';return}
+ area.innerHTML=lista.map(item=>`<article class="history-item"><div class="history-tank">${escaparHtml(item.tanque||'Tanque não identificado')}</div><div class="history-meta">${escaparHtml(item.data||'Data não disponível')}</div><div class="history-summary"><div><b>Ração por dia:</b> ${escaparHtml(item.diaria)} g</div><div><b>Ração por trato:</b> ${escaparHtml(item.porTrato)} g</div><div><b>Taxa utilizada:</b> ${escaparHtml(item.taxa)}% ${item.personalizada?'(personalizada)':'(tabela Samaria)'}</div><div><b>Peixes:</b> ${escaparHtml(item.quantidade)} · <b>Peso total:</b> ${escaparHtml(item.pesoTotal)} g</div><div><b>Tratos por dia:</b> ${escaparHtml(item.tratos)} · <b>Peso médio:</b> ${escaparHtml(item.medio)} g</div></div><div class="history-actions"><button class="secondary" data-repetir="${escaparHtml(item.id)}">Reutilizar dados</button><button class="danger" data-excluir="${escaparHtml(item.id)}">Excluir</button></div></article>`).join('');
+ area.querySelectorAll('[data-excluir]').forEach(btn=>btn.addEventListener('click',()=>{const id=btn.getAttribute('data-excluir');if(!confirm('Excluir este registro do histórico?'))return;salvarHistorico(lerHistorico().filter(item=>item.id!==id));renderizarHistorico()}));
+ area.querySelectorAll('[data-repetir]').forEach(btn=>btn.addEventListener('click',()=>{const item=lerHistorico().find(x=>x.id===btn.getAttribute('data-repetir'));if(!item)return;$('tanque').value=item.tanque==='Não identificado'?'':item.tanque;$('quantidade').value=item.quantidade;$('peso').value=String(item.pesoTotal).replace('.',',');$('tratos').value=item.tratos;$('resultado').classList.remove('show');$('decisaoTaxa').classList.remove('show');window.scrollTo({top:0,behavior:'smooth'})}));
+}
+function registrarCalculo(taxaUsada){
+ if(!calculoPendente)return;const p=calculoPendente,diaria=p.pesoTotal*taxaUsada/100,lista=lerHistorico(),agora=new Date();
+ const registro={id:Date.now().toString(36)+Math.random().toString(36).slice(2,8),tanque:p.tanque,data:agora.toLocaleDateString('pt-BR')+' '+agora.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'}),quantidade:p.quantidade,pesoTotal:Number(p.pesoTotal.toFixed(4)),tratos:p.tratos,medio:Number(p.medio.toFixed(4)),taxa:Number(taxaUsada.toFixed(4)),personalizada:Math.abs(taxaUsada-p.rec.taxa)>1e-9,diaria:Number(diaria.toFixed(4)),porTrato:Number((diaria/p.tratos).toFixed(4)),fase:p.rec.fase,caracteristica:p.rec.caracteristica};
+ lista.unshift(registro);if(salvarHistorico(lista))renderizarHistorico();
+}
+$('limparHistorico').addEventListener('click',()=>{if(!lerHistorico().length){alert('O histórico já está vazio.');return}if(!confirm('Apagar todos os cálculos do histórico deste navegador? Esta ação não pode ser desfeita.'))return;salvarHistorico([]);renderizarHistorico()});
+$('exportarHistorico').addEventListener('click',()=>{const lista=lerHistorico();if(!lista.length){alert('Não há registros para exportar.');return}const blob=new Blob([JSON.stringify(lista,null,2)],{type:'application/json;charset=utf-8'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='historico-calculadora-samaria.json';a.click();URL.revokeObjectURL(url)});
+renderizarHistorico();
+
 </script></body></html>
