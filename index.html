@@ -206,7 +206,10 @@
 
                 <!-- Resultado -->
                 <div id="resultado" class="hidden glass-card p-6 rounded-2xl shadow-lg space-y-4">
-                    <h2 class="font-bold text-xl text-brand-900 border-b pb-2"><i class="fa-solid fa-circle-check text-emerald-600 mr-2"></i>Resultado do Cálculo</h2>
+                    <div class="flex items-center justify-between border-b pb-2">
+                        <h2 class="font-bold text-xl text-brand-900"><i class="fa-solid fa-circle-check text-emerald-600 mr-2"></i>Resultado do Cálculo</h2>
+                        <span id="nomeTanque" class="text-xs bg-brand-100 text-brand-800 font-bold px-2.5 py-1 rounded-full"></span>
+                    </div>
                     <div class="bg-brand-50 border border-brand-200 p-4 rounded-xl text-center">
                         <span class="text-xs uppercase font-bold text-brand-700 tracking-wider">Ração Recomendada por Dia</span>
                         <div id="diaria" class="text-3xl font-black text-brand-700 mt-1">—</div>
@@ -307,7 +310,7 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            $('btnMobileMenu')?.addEventListener('click', () => $('sidebar').classList.toggle('hidden'));
+            $('btnMobileMenu')?.addEventListener('click', () =>$('sidebar').classList.toggle('hidden'));
             document.querySelectorAll('.nav-btn').forEach(btn => {
                 btn.addEventListener('click', () => {
                     switchTab(btn.getAttribute('data-target'));
@@ -316,9 +319,26 @@
             });
 
             // Tecla ENTER nos campos de entrada
-            ['tanque', 'quantidade', 'peso', 'tratos'].forEach(id => {
-                $(id)?.addEventListener('keydown', e => { if (e.key === 'Enter') calcular(); });
+            ['tanque', 'quantidade', 'peso', 'tratos', 'novaTaxa'].forEach(id => {
+                $(id)?.addEventListener('keydown', e => {
+                    if (e.key === 'Enter') {
+                        if (id === 'novaTaxa') {
+                            $('aplicarTaxa').click();
+                        } else {
+                            calcular();
+                        }
+                    }
+                });
             });
+
+            // Busca no Histórico
+            $('buscaHistorico')?.addEventListener('input', e => {
+                renderizarHistorico(e.target.value.trim());
+            });
+
+            // Exportações e Limpeza
+            $('exportarJson')?.addEventListener('click', exportarJSON);
+            $('exportarCsv')?.addEventListener('click', exportarCSV);$('limparHistorico')?.addEventListener('click', limparHistorico);
 
             renderizarTabelaRef();
             renderizarHistorico();
@@ -357,11 +377,9 @@
             if (!rec) { $('erro').textContent = `Peso médio de ${fmt(medio)}g fora da faixa da tabela.`; $('erro').classList.remove('hidden'); return; }
 
             calculoPendente = { quantidade, pesoTotal, tratos, medio, rec, tanque: $('tanque').value.trim() || 'Não identificado', salvo: false };
-            $('resultado').classList.add('hidden');
-            $('perguntaTaxa').innerHTML = `Tanque <b>${calculoPendente.tanque}</b>: peso médio <b>${fmt(medio)}g</b>. Taxa recomendada: <b>${rec.taxa}%</b>.`;
+            $('resultado').classList.add('hidden');$('perguntaTaxa').innerHTML = `Tanque <b>${calculoPendente.tanque}</b>: peso médio <b>${fmt(medio)}g</b>. Taxa recomendada: <b>${rec.taxa}%</b>.`;
             $('usarTaxa').textContent = `Usar ${rec.taxa}%`;
-            $('decisaoTaxa').classList.remove('hidden');
-            $('decisaoTaxa').scrollIntoView({ behavior: 'smooth', block: 'center' });
+            $('decisaoTaxa').classList.remove('hidden');$('decisaoTaxa').scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
 
         function mostrarResultado(taxaUsada) {
@@ -370,18 +388,16 @@
             const diariaGrams = pesoTotal * (taxaUsada / 100);
             const porTratoGrams = diariaGrams / tratos;
 
-            $('nomeTanque').textContent = tanque;
+            if ($('nomeTanque'))$('nomeTanque').textContent = tanque;
             $('diaria').textContent = diariaGrams >= 1000 ? `${fmt(diariaGrams/1000)} kg` : `${fmt(diariaGrams)} g`;
             $('porTrato').textContent = porTratoGrams >= 1000 ? `${fmt(porTratoGrams/1000)} kg` : `${fmt(porTratoGrams)} g`;
             $('taxa').textContent = `${taxaUsada}%`;
             $('medio').textContent = `${fmt(medio)} g`;
-            $('numTratos').textContent = String(tratos);
-            $('fase').textContent = rec.fase;
+            $('numTratos').textContent = String(tratos);$('fase').textContent = rec.fase;
             $('caracteristica').textContent = rec.caracteristica;
             $('faixa').textContent = `${fmt(rec.minimo)} a ${fmt(rec.maximo)} g`;
 
-            $('decisaoTaxa').classList.add('hidden');
-            $('resultado').classList.remove('hidden');
+            $('decisaoTaxa').classList.add('hidden');$('resultado').classList.remove('hidden');
             
             if (!calculoPendente.salvo) {
                 registrarCalculo(taxaUsada);
@@ -392,18 +408,14 @@
         }
 
         $('calcular').addEventListener('click', calcular);
-        $('usarTaxa').addEventListener('click', () => calculoPendente && mostrarResultado(calculoPendente.rec.taxa));
-        $('trocarTaxa').addEventListener('click', () => $('taxaPersonalizada').classList.remove('hidden'));
-        $('aplicarTaxa').addEventListener('click', () => {
+        $('usarTaxa').addEventListener('click', () => calculoPendente && mostrarResultado(calculoPendente.rec.taxa));$('trocarTaxa').addEventListener('click', () => $('taxaPersonalizada').classList.remove('hidden'));$('aplicarTaxa').addEventListener('click', () => {
             const taxa = Number($('novaTaxa').value.replace(',', '.'));
             if (taxa > 0 && taxa <= 100) mostrarResultado(taxa);
         });
 
         $('novo').addEventListener('click', () => {
-            ['tanque', 'quantidade', 'peso', 'tratos', 'novaTaxa'].forEach(id => $(id).value = '');
-            $('resultado').classList.add('hidden');
-            $('decisaoTaxa').classList.add('hidden');
-            $('taxaPersonalizada').classList.add('hidden');
+            ['tanque', 'quantidade', 'peso', 'tratos', 'novaTaxa'].forEach(id => $(id).value = '');$('resultado').classList.add('hidden');
+            $('decisaoTaxa').classList.add('hidden');$('taxaPersonalizada').classList.add('hidden');
             calculoPendente = null;
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
@@ -440,9 +452,16 @@
             renderizarHistorico();
         }
 
-        function renderizarHistorico() {
-            const lista = lerHistorico(), area = $('historico');
-            if (!lista.length) { area.innerHTML = `<p class="text-sm text-slate-400 text-center p-4">Nenhum histórico salvo.</p>`; return; }
+        function renderizarHistorico(filtro = '') {
+            let lista = lerHistorico();
+            const area = $('historico');
+
+            if (filtro) {
+                const f = filtro.toLowerCase();
+                lista = lista.filter(i => i.tanque.toLowerCase().includes(f) || i.fase.toLowerCase().includes(f) || i.data.includes(f));
+            }
+
+            if (!lista.length) { area.innerHTML = `<p class="text-sm text-slate-400 text-center p-4">Nenhum histórico encontrado.</p>`; return; }
             area.innerHTML = lista.map(i => `
                 <div class="glass-card p-4 rounded-xl flex justify-between items-center text-sm">
                     <div>
@@ -453,69 +472,31 @@
             `).join('');
         }
 
-        function renderizarTanques() {
-            const tanques = lerTanques(), grid = $('gridTanques');
-            if (!tanques.length) { grid.innerHTML = `<p class="col-span-full text-slate-400 text-center p-4">Nenhum tanque cadastrado.</p>`; return; }
-            grid.innerHTML = tanques.map(t => {
-                const bio = (t.quantidade * t.pesoMedio) / 1000, rac = bio * (t.taxa / 100);
-                return `
-                <div class="glass-card p-4 rounded-xl space-y-3">
-                    <div class="flex justify-between items-start">
-                        <div><h3 class="font-bold text-brand-900">${t.nome}</h3><span class="text-xs bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full">${t.fase}</span></div>
-                        <button onclick="excluirTanque('${t.id}')" class="text-slate-400 hover:text-red-600"><i class="fa-solid fa-trash"></i></button>
-                    </div>
-                    <div class="grid grid-cols-2 gap-2 text-xs">
-                        <div class="bg-slate-50 p-2 rounded">Peixes: <b>${t.quantidade}</b></div>
-                        <div class="bg-slate-50 p-2 rounded">Peso M.: <b>${t.pesoMedio}g</b></div>
-                        <div class="bg-slate-50 p-2 rounded">Biomassa: <b>${fmt(bio)} kg</b></div>
-                        <div class="bg-slate-50 p-2 rounded">Ração: <b>${fmt(rac)} kg</b></div>
-                    </div>
-                </div>`;
-            }).join('');
+        function exportarJSON() {
+            const data = JSON.stringify(lerHistorico(), null, 2);
+            const blob = new Blob([data], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `historico_samaria_${Date.now()}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
         }
 
-        function excluirTanque(id) { salvarTanques(lerTanques().filter(t => t.id !== id)); renderizarTanques(); atualizarDashboard(); }
-
-        function renderizarTabelaRef() {
-            $('corpoTabelaRef').innerHTML = tabela.map(i => `
-                <tr class="hover:bg-slate-50">
-                    <td class="p-3 font-semibold text-brand-900">${i.fase}</td>
-                    <td class="p-3">${fmt(i.minimo)}g a ${fmt(i.maximo)}g</td>
-                    <td class="p-3 text-slate-600">${i.caracteristica}</td>
-                    <td class="p-3 text-right font-bold text-brand-600">${i.taxa}%</td>
-                </tr>
-            `).join('');
+        function exportarCSV() {
+            const lista = lerHistorico();
+            if (!lista.length) return alert('Histórico vazio para exportar.');
+            
+            const cabecalho = 'ID,Tanque,Data,Quantidade,PesoTotalGrams,Tratos,PesoMedioGrams,Taxa,DiariaGrams,Fase\n';
+            const linhas = lista.map(i => `"${i.id}","${i.tanque}","${i.data}",${i.quantidade},${i.pesoTotalGrams},${i.tratos},${i.medioGrams},${i.taxa},${i.diariaGrams},"${i.fase}"`).join('\n');
+            
+            const blob = new Blob([cabecalho + linhas], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `historico_samaria_${Date.now()}.csv`;
+            a.click();
+            URL.revokeObjectURL(url);
         }
 
-        function atualizarDashboard() {
-            const tanques = lerTanques();
-            let totalBio = 0, totalRac = 0, somaPesos = 0;
-            tanques.forEach(t => {
-                const bio = (t.quantidade * t.pesoMedio) / 1000;
-                totalBio += bio; totalRac += bio * (t.taxa / 100); somaPesos += t.pesoMedio;
-            });
-            $('kpiBiomassa').textContent = `${fmt(totalBio)} kg`;
-            $('kpiRacaoDiaria').textContent = `${fmt(totalRac)} kg`;
-            $('kpiTanquesAtivos').textContent = tanques.length;
-            $('kpiPesoMedio').textContent = tanques.length ? `${fmt(somaPesos / tanques.length)} g` : '0 g';
-
-            const ctx1 = $('chartRacaoTanque').getContext('2d');
-            if (chartRacaoInst) chartRacaoInst.destroy();
-            chartRacaoInst = new Chart(ctx1, {
-                type: 'bar',
-                data: { labels: tanques.map(t => t.nome), datasets: [{ label: 'Ração (kg)', data: tanques.map(t => ((t.quantidade * t.pesoMedio)/1000)*(t.taxa/100)), backgroundColor: '#176b55' }] },
-                options: { responsive: true, maintainAspectRatio: false }
-            });
-
-            const ctx2 = $('chartFases').getContext('2d');
-            const fasesCount = {}; tanques.forEach(t => fasesCount[t.fase] = (fasesCount[t.fase] || 0) + 1);
-            if (chartFasesInst) chartFasesInst.destroy();
-            chartFasesInst = new Chart(ctx2, {
-                type: 'doughnut',
-                data: { labels: Object.keys(fasesCount), datasets: [{ data: Object.values(fasesCount), backgroundColor: ['#239c7e', '#176b55', '#0e4134'] }] },
-                options: { responsive: true, maintainAspectRatio: false }
-            });
-        }
-    </script>
-</body>
-</html>
+        function limparHistorico() {
