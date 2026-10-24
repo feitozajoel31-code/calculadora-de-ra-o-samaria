@@ -1,31 +1,12 @@
-<!doctype html>
-<html lang="pt-BR">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#176b55">
-<title>Calculadora de Ração — Samaria</title>
-<style>
-:root{color-scheme:light;--green:#176b55;--green2:#e8f4ef;--ink:#17332b;--muted:#5b6e67;--line:#d8e4df;--bg:#f4f8f6;--white:#fff;--danger:#a93226}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--ink);padding:20px 14px 32px}
-main{max-width:520px;margin:0 auto}.brand{background:var(--green);color:white;border-radius:20px;padding:22px 20px;margin-bottom:16px}.eyebrow{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;opacity:.85}.brand h1{font-size:1.55rem;line-height:1.2;margin:7px 0}.brand p{margin:0;opacity:.9;font-size:.93rem}
-.card{background:var(--white);border:1px solid var(--line);border-radius:18px;padding:18px;margin-bottom:14px;box-shadow:0 3px 12px #17332b08}.card h2{font-size:1.05rem;margin:0 0 14px}
-label{display:block;font-size:.9rem;font-weight:650;margin:13px 0 6px}input{display:block;width:100%;font:inherit;font-size:1.05rem;padding:13px 14px;border:1px solid #b9cbc3;border-radius:12px;background:#fff;color:var(--ink);outline:none}input:focus{border-color:var(--green);box-shadow:0 0 0 3px #176b5520}
-button{font:inherit;font-weight:700;border:0;border-radius:12px;min-height:48px;padding:12px 16px;cursor:pointer}.primary{width:100%;background:var(--green);color:white;margin-top:18px}.secondary{background:var(--green2);color:var(--green);flex:1}.actions{display:flex;gap:10px;margin-top:12px}.result{display:none}.result.show{display:block}.result-top{background:var(--green2);border-radius:13px;padding:14px;margin-bottom:14px}.result-top small{display:block;color:var(--muted);font-weight:600}.big{font-size:1.8rem;font-weight:800;color:var(--green);line-height:1.25;margin-top:3px}.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px}.stat{border:1px solid var(--line);border-radius:12px;padding:12px}.stat span{display:block;font-size:.78rem;color:var(--muted);margin-bottom:5px}.stat strong{font-size:1rem;overflow-wrap:anywhere}.details{font-size:.91rem;line-height:1.55;margin-top:14px}.details div{margin:5px 0}.note{font-size:.82rem;color:var(--muted);line-height:1.45}.error{color:var(--danger);font-size:.9rem;margin-top:10px;display:none}.error.show{display:block}.rate-choice{display:none}.rate-choice.show{display:block}.rate-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}.rate-actions button{min-height:48px}.rate-custom{display:none;margin-top:12px}.rate-custom.show{display:block}.rate-custom input{margin-bottom:10px}.footer{text-align:center;font-size:.78rem;color:var(--muted);padding:8px 12px}
-
-.history-list{display:grid;gap:10px}
-.history-item{border:1px solid var(--line);border-radius:13px;padding:13px;background:#fff}
-.history-tank{font-size:1.08rem;font-weight:850;color:var(--green);overflow-wrap:anywhere;margin-bottom:4px}
-.history-meta{font-size:.78rem;color:var(--muted);margin-bottom:9px}
-.history-summary{font-size:.9rem;line-height:1.5}<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="theme-color" content="#176b55">
-    <title>Dashboard de Aquicultura & Calculadora — Samaria</title>
+    <title>Dashboard & Calculadora de Ração — Samaria</title>
 
-    <!-- Tailwind CSS CDN -->
+    <!-- Tailwind CSS & FontAwesome Icons -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -37,435 +18,268 @@ button{font:inherit;font-weight:700;border:0;border-radius:12px;min-height:48px;
                             100: '#e8f4ef',
                             200: '#c6e6d9',
                             500: '#239c7e',
-                            600: '#176b55', // Primary Samaria Green
+                            600: '#176b55', // Cor Primária Samaria
                             700: '#125443',
                             800: '#0e4134',
-                            900: '#17332b'  // Dark slate ink
+                            900: '#17332b'
                         }
                     }
                 }
             }
         }
     </script>
-
-    <!-- FontAwesome & Chart.js -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f3f6f5;
-            color: #17332b;
-        }
-        .glass-card {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(216, 228, 223, 0.7);
-        }
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #f1f5f3;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #b9cbc3;
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #176b55;
-        }
+        body { font-family: 'Inter', sans-serif; background-color: #f4f8f6; color: #17332b; }
+        .glass-card { background: rgba(255, 255, 255, 0.98); border: 1px solid #d8e4df; }
     </style>
 </head>
 <body class="bg-slate-100 text-brand-900 min-h-screen flex flex-col md:flex-row">
 
-    <!-- Mobile Top Navigation Header -->
+    <!-- Header Mobile -->
     <header class="md:hidden bg-brand-600 text-white p-4 flex justify-between items-center sticky top-0 z-50 shadow-md">
-        <div class="flex items-center space-x-3">
-            <div class="bg-white/10 p-2 rounded-lg">
-                <i class="fa-solid font-bold fa-fish-fins text-xl text-emerald-300"></i>
-            </div>
-            <div>
-                <h1 class="font-bold text-lg leading-tight">Samaria</h1>
-                <p class="text-xs text-brand-100 opacity-80">Aquicultura & Nutrição</p>
-            </div>
+        <div class="flex items-center space-x-2">
+            <i class="fa-solid fa-fish-fins text-xl text-emerald-300"></i>
+            <span class="font-bold text-lg">Samaria Aquicultura</span>
         </div>
-        <button id="toggleMobileMenu" class="p-2 text-white focus:outline-none" aria-label="Abrir Menu">
+        <button id="btnMobileMenu" class="p-2 text-white focus:outline-none">
             <i class="fa-solid fa-bars text-xl"></i>
         </button>
     </header>
 
-    <!-- Sidebar Navigation -->
-    <aside id="sidebar" class="hidden md:flex flex-col w-full md:w-64 bg-brand-900 text-white flex-shrink-0 min-h-screen sticky top-0 h-screen z-40 transition-all duration-300">
-        <!-- Sidebar Header -->
-        <div class="p-5 border-b border-white/10 flex items-center justify-between">
-            <div class="flex items-center space-x-3">
-                <div class="bg-brand-600 p-2.5 rounded-xl shadow-lg">
-                    <i class="fa-solid fa-fish-fins text-2xl text-emerald-300"></i>
-                </div>
-                <div>
-                    <h2 class="font-bold text-lg tracking-wide">Samaria</h2>
-                    <span class="text-xs text-emerald-400 bg-emerald-950/60 px-2 py-0.5 rounded-full border border-emerald-500/30">Gestão 2.0</span>
-                </div>
+    <!-- Menu Lateral / Navegação -->
+    <aside id="sidebar" class="hidden md:flex flex-col w-full md:w-64 bg-brand-900 text-white flex-shrink-0 min-h-screen sticky top-0 h-screen z-40 transition-all">
+        <div class="p-5 border-b border-white/10 flex items-center space-x-3">
+            <div class="bg-brand-600 p-2.5 rounded-xl shadow">
+                <i class="fa-solid fa-fish-fins text-2xl text-emerald-300"></i>
+            </div>
+            <div>
+                <h2 class="font-bold text-lg">Samaria</h2>
+                <span class="text-xs text-emerald-400 bg-emerald-950 px-2 py-0.5 rounded-full border border-emerald-500/30">Gestão de Ração</span>
             </div>
         </div>
 
-        <!-- Navigation Links -->
         <nav class="flex-1 p-4 space-y-1.5 overflow-y-auto">
-            <button data-target="tab-dashboard" class="nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl font-medium transition-all duration-200 bg-brand-600 text-white shadow-sm">
-                <i class="fa-solid fa-chart-pie w-5 text-center text-emerald-300"></i>
+            <button data-target="tab-dashboard" class="nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl font-medium transition-all bg-brand-600 text-white">
+                <i class="fa-solid fa-chart-pie w-5 text-emerald-300"></i>
                 <span>Dashboard</span>
             </button>
-            <button data-target="tab-calculadora" class="nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl font-medium transition-all duration-200 text-slate-300 hover:bg-white/10 hover:text-white">
-                <i class="fa-solid fa-calculator w-5 text-center text-emerald-300"></i>
+            <button data-target="tab-calculadora" class="nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl font-medium transition-all text-slate-300 hover:bg-white/10 hover:text-white">
+                <i class="fa-solid fa-calculator w-5 text-emerald-300"></i>
                 <span>Calculadora</span>
             </button>
-            <button data-target="tab-tanques" class="nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl font-medium transition-all duration-200 text-slate-300 hover:bg-white/10 hover:text-white">
-                <i class="fa-solid fa-water w-5 text-center text-emerald-300"></i>
+            <button data-target="tab-tanques" class="nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl font-medium transition-all text-slate-300 hover:bg-white/10 hover:text-white">
+                <i class="fa-solid fa-water w-5 text-emerald-300"></i>
                 <span>Tanques Ativos</span>
             </button>
-            <button data-target="tab-historico" class="nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl font-medium transition-all duration-200 text-slate-300 hover:bg-white/10 hover:text-white">
-                <i class="fa-solid fa-clock-rotate-left w-5 text-center text-emerald-300"></i>
+            <button data-target="tab-historico" class="nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl font-medium transition-all text-slate-300 hover:bg-white/10 hover:text-white">
+                <i class="fa-solid fa-clock-rotate-left w-5 text-emerald-300"></i>
                 <span>Histórico</span>
             </button>
-            <button data-target="tab-tabela" class="nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl font-medium transition-all duration-200 text-slate-300 hover:bg-white/10 hover:text-white">
-                <i class="fa-solid fa-table-list w-5 text-center text-emerald-300"></i>
+            <button data-target="tab-tabela" class="nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl font-medium transition-all text-slate-300 hover:bg-white/10 hover:text-white">
+                <i class="fa-solid fa-table-list w-5 text-emerald-300"></i>
                 <span>Tabela Samaria</span>
             </button>
         </nav>
 
-        <!-- Sidebar Footer -->
-        <div class="p-4 border-t border-white/10 text-xs text-brand-200/60 text-center">
+        <div class="p-4 border-t border-white/10 text-xs text-slate-400 text-center">
             Samaria Aquicultura &copy; 2026
         </div>
     </aside>
 
-    <!-- Main Content Container -->
-    <main class="flex-1 overflow-x-hidden p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto w-full">
+    <!-- Conteúdo Principal -->
+    <main class="flex-1 p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto w-full overflow-x-hidden">
 
-        <!-- TAB 1: DASHBOARD -->
+        <!-- ABA 1: DASHBOARD -->
         <section id="tab-dashboard" class="tab-content space-y-6">
-            <!-- Header Banner -->
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-gradient-to-r from-brand-600 to-brand-800 text-white p-6 rounded-2xl shadow-lg">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-brand-600 text-white p-6 rounded-2xl shadow-lg">
                 <div>
-                    <h1 class="text-2xl font-bold">Painel de Alimentação & Aquicultura</h1>
-                    <p class="text-brand-100 text-sm mt-1">Acompanhamento consolidado dos tanques, lotes e ração diária.</p>
+                    <h1 class="text-2xl font-bold">Painel de Nutrição & Aquicultura</h1>
+                    <p class="text-brand-100 text-sm mt-1">Visão consolidada dos tanques ativos e consumo de ração.</p>
                 </div>
-                <button onclick="switchTab('tab-calculadora')" class="bg-white text-brand-700 hover:bg-brand-50 font-semibold px-4 py-2.5 rounded-xl text-sm transition-all shadow hover:shadow-md flex items-center justify-center space-x-2">
+                <button onclick="switchTab('tab-calculadora')" class="bg-white text-brand-700 hover:bg-brand-50 font-semibold px-4 py-2.5 rounded-xl text-sm transition-all shadow flex items-center justify-center space-x-2">
                     <i class="fa-solid fa-plus text-brand-600"></i>
                     <span>Novo Cálculo</span>
                 </button>
             </div>
 
-            <!-- KPI Cards -->
+            <!-- Cards KPIs -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                <div class="glass-card p-5 rounded-2xl shadow-sm border border-slate-200/80 flex items-center justify-between">
+                <div class="glass-card p-5 rounded-2xl shadow-sm flex items-center justify-between">
                     <div>
-                        <p class="text-xs font-semibold uppercase tracking-wider text-slate-500">Biomassa Total</p>
+                        <p class="text-xs font-semibold uppercase text-slate-500">Biomassa Total</p>
                         <h3 class="text-2xl font-bold text-brand-900 mt-1" id="kpiBiomassa">0 kg</h3>
-                        <p class="text-xs text-emerald-600 font-medium mt-1"><i class="fa-solid fa-arrow-up text-xs"></i> Tanques ativos</p>
                     </div>
-                    <div class="bg-emerald-100 text-emerald-700 p-3.5 rounded-2xl">
-                        <i class="fa-solid fa-weight-hanging text-2xl"></i>
-                    </div>
+                    <div class="bg-emerald-100 text-emerald-700 p-3 rounded-2xl"><i class="fa-solid fa-weight-hanging text-2xl"></i></div>
                 </div>
-
-                <div class="glass-card p-5 rounded-2xl shadow-sm border border-slate-200/80 flex items-center justify-between">
+                <div class="glass-card p-5 rounded-2xl shadow-sm flex items-center justify-between">
                     <div>
-                        <p class="text-xs font-semibold uppercase tracking-wider text-slate-500">Ração Diária</p>
+                        <p class="text-xs font-semibold uppercase text-slate-500">Ração Diária</p>
                         <h3 class="text-2xl font-bold text-brand-600 mt-1" id="kpiRacaoDiaria">0 kg</h3>
-                        <p class="text-xs text-slate-500 font-medium mt-1">Consumo estimativo total</p>
                     </div>
-                    <div class="bg-brand-100 text-brand-600 p-3.5 rounded-2xl">
-                        <i class="fa-solid fa-wheat-awn text-2xl"></i>
-                    </div>
+                    <div class="bg-brand-100 text-brand-600 p-3 rounded-2xl"><i class="fa-solid fa-wheat-awn text-2xl"></i></div>
                 </div>
-
-                <div class="glass-card p-5 rounded-2xl shadow-sm border border-slate-200/80 flex items-center justify-between">
+                <div class="glass-card p-5 rounded-2xl shadow-sm flex items-center justify-between">
                     <div>
-                        <p class="text-xs font-semibold uppercase tracking-wider text-slate-500">Tanques Ativos</p>
+                        <p class="text-xs font-semibold uppercase text-slate-500">Tanques Ativos</p>
                         <h3 class="text-2xl font-bold text-brand-900 mt-1" id="kpiTanquesAtivos">0</h3>
-                        <p class="text-xs text-slate-500 font-medium mt-1">Lotes em acompanhamento</p>
                     </div>
-                    <div class="bg-blue-100 text-blue-700 p-3.5 rounded-2xl">
-                        <i class="fa-solid fa-water text-2xl"></i>
-                    </div>
+                    <div class="bg-blue-100 text-blue-700 p-3 rounded-2xl"><i class="fa-solid fa-water text-2xl"></i></div>
                 </div>
-
-                <div class="glass-card p-5 rounded-2xl shadow-sm border border-slate-200/80 flex items-center justify-between">
+                <div class="glass-card p-5 rounded-2xl shadow-sm flex items-center justify-between">
                     <div>
-                        <p class="text-xs font-semibold uppercase tracking-wider text-slate-500">Peso Médio Geral</p>
+                        <p class="text-xs font-semibold uppercase text-slate-500">Peso Médio Geral</p>
                         <h3 class="text-2xl font-bold text-brand-900 mt-1" id="kpiPesoMedio">0 g</h3>
-                        <p class="text-xs text-slate-500 font-medium mt-1">Média ponderada do plantel</p>
                     </div>
-                    <div class="bg-amber-100 text-amber-700 p-3.5 rounded-2xl">
-                        <i class="fa-solid fa-fish text-2xl"></i>
-                    </div>
+                    <div class="bg-amber-100 text-amber-700 p-3 rounded-2xl"><i class="fa-solid fa-fish text-2xl"></i></div>
                 </div>
             </div>
 
-            <!-- Charts Section -->
+            <!-- Gráficos -->
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <!-- Bar Chart: Ração por Tanque -->
-                <div class="glass-card p-5 rounded-2xl border border-slate-200/80 shadow-sm lg:col-span-2">
-                    <div class="flex justify-between items-center mb-4">
-                        <h2 class="font-bold text-base text-brand-900 flex items-center gap-2">
-                            <i class="fa-solid fa-chart-column text-brand-600"></i>
-                            Ração Diária Estimada por Tanque (kg)
-                        </h2>
-                    </div>
-                    <div class="h-64 relative">
-                        <canvas id="chartRacaoTanque"></canvas>
-                    </div>
+                <div class="glass-card p-5 rounded-2xl shadow-sm lg:col-span-2">
+                    <h2 class="font-bold text-brand-900 mb-4"><i class="fa-solid fa-chart-column text-brand-600 mr-2"></i>Ração Diária por Tanque (kg)</h2>
+                    <div class="h-64 relative"><canvas id="chartRacaoTanque"></canvas></div>
                 </div>
-
-                <!-- Doughnut Chart: Fases de Cultivo -->
-                <div class="glass-card p-5 rounded-2xl border border-slate-200/80 shadow-sm">
-                    <div class="flex justify-between items-center mb-4">
-                        <h2 class="font-bold text-base text-brand-900 flex items-center gap-2">
-                            <i class="fa-solid fa-chart-pie text-brand-600"></i>
-                            Distribuição por Fase
-                        </h2>
-                    </div>
-                    <div class="h-64 relative flex items-center justify-center">
-                        <canvas id="chartFases"></canvas>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Line Chart: Histórico de Registro -->
-            <div class="glass-card p-5 rounded-2xl border border-slate-200/80 shadow-sm">
-                <div class="flex justify-between items-center mb-4">
-                    <h2 class="font-bold text-base text-brand-900 flex items-center gap-2">
-                        <i class="fa-solid fa-chart-line text-brand-600"></i>
-                        Evolução dos Relações do Histórico (Últimos Cálculos)
-                    </h2>
-                </div>
-                <div class="h-60 relative">
-                    <canvas id="chartHistorico"></canvas>
+                <div class="glass-card p-5 rounded-2xl shadow-sm">
+                    <h2 class="font-bold text-brand-900 mb-4"><i class="fa-solid fa-chart-pie text-brand-600 mr-2"></i>Fases de Cultivo</h2>
+                    <div class="h-64 relative flex items-center justify-center"><canvas id="chartFases"></canvas></div>
                 </div>
             </div>
         </section>
 
-        <!-- TAB 2: CALCULADORA DE RAÇÃO -->
+        <!-- ABA 2: CALCULADORA -->
         <section id="tab-calculadora" class="tab-content hidden space-y-6">
             <div class="max-w-2xl mx-auto space-y-6">
-                <!-- Banner Title -->
-                <div class="bg-brand-600 text-white p-6 rounded-2xl shadow-md text-center sm:text-left">
+                <div class="bg-brand-600 text-white p-6 rounded-2xl shadow-md">
                     <span class="text-xs uppercase tracking-widest text-emerald-200 font-semibold">Samaria · Aquicultura</span>
                     <h1 class="text-2xl font-bold mt-1">Calculadora de Ração</h1>
-                    <p class="text-brand-100 text-sm mt-1">Estimativa de alimentação diária e por trato baseada na tabela oficial.</p>
                 </div>
 
-                <!-- Input Form -->
-                <div class="glass-card p-6 rounded-2xl border border-slate-200/80 shadow-sm space-y-4">
-                    <h2 class="font-bold text-lg text-brand-900 border-b pb-2 flex items-center gap-2">
-                        <i class="fa-solid fa-sliders text-brand-600"></i> Dados do Lote
-                    </h2>
-
+                <div class="glass-card p-6 rounded-2xl shadow-sm space-y-4">
+                    <h2 class="font-bold text-lg text-brand-900 border-b pb-2"><i class="fa-solid fa-sliders text-brand-600 mr-2"></i>Dados do Lote</h2>
+                    
                     <div>
-                        <label for="tanque" class="block text-sm font-semibold text-slate-700 mb-1">Nome ou identificação do tanque</label>
-                        <input id="tanque" type="text" maxlength="80" placeholder="Ex.: TE12, Tanque 3 (opcional)" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-brand-600 focus:border-brand-600 outline-none transition-all">
+                        <label for="tanque" class="block text-sm font-semibold text-slate-700 mb-1">Nome / Identificação do Tanque</label>
+                        <input id="tanque" type="text" maxlength="80" placeholder="Ex.: TE12, Tanque 3 (opcional)" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-brand-600 outline-none">
                     </div>
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
                             <label for="quantidade" class="block text-sm font-semibold text-slate-700 mb-1">Quantidade de peixes</label>
-                            <input id="quantidade" type="number" inputmode="numeric" min="1" step="1" placeholder="Ex.: 1000" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-brand-600 focus:border-brand-600 outline-none transition-all">
+                            <input id="quantidade" type="number" inputmode="numeric" min="1" step="1" placeholder="Ex.: 1000" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-brand-600 outline-none">
                         </div>
                         <div>
                             <label for="peso" class="block text-sm font-semibold text-slate-700 mb-1">Peso total (gramas ou kg)</label>
-                            <div class="relative">
-                                <input id="peso" type="text" inputmode="decimal" placeholder="Ex.: 1800g ou 1.8kg" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-brand-600 focus:border-brand-600 outline-none transition-all pr-12">
-                                <span class="absolute right-3 top-3 text-xs font-semibold text-slate-400 bg-slate-100 px-2 py-1 rounded">g / kg</span>
-                            </div>
+                            <input id="peso" type="text" inputmode="decimal" placeholder="Ex.: 1800g ou 1.8kg" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-brand-600 outline-none">
                         </div>
                     </div>
 
                     <div>
                         <label for="tratos" class="block text-sm font-semibold text-slate-700 mb-1">Tratos por dia</label>
-                        <input id="tratos" type="number" inputmode="numeric" min="1" step="1" placeholder="Ex.: 4" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-brand-600 focus:border-brand-600 outline-none transition-all">
+                        <input id="tratos" type="number" inputmode="numeric" min="1" step="1" placeholder="Ex.: 4" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-brand-600 outline-none">
                     </div>
 
-                    <button id="calcular" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-bold py-3.5 px-4 rounded-xl shadow-md transition-all flex items-center justify-center space-x-2">
+                    <button id="calcular" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-bold py-3.5 px-4 rounded-xl shadow transition-all flex items-center justify-center space-x-2">
                         <i class="fa-solid fa-calculator"></i>
                         <span>Calcular Ração</span>
                     </button>
 
-                    <div id="erro" class="hidden p-3 bg-red-50 border border-red-200 text-red-700 text-sm rounded-xl" role="alert"></div>
+                    <div id="erro" class="hidden p-3 bg-red-50 border border-red-200 text-red-700 text-sm rounded-xl"></div>
                 </div>
 
-                <!-- Rate Confirmation Card -->
-                <div id="decisaoTaxa" class="hidden glass-card p-6 rounded-2xl border border-brand-200 shadow-md space-y-4 bg-emerald-50/50">
-                    <h2 class="font-bold text-lg text-brand-900 flex items-center gap-2">
-                        <i class="fa-solid fa-percent text-brand-600"></i> Taxa de Alimentação
-                    </h2>
-                    <p id="perguntaTaxa" class="text-sm text-slate-700 leading-relaxed"></p>
-
+                <!-- Decisão Taxa -->
+                <div id="decisaoTaxa" class="hidden glass-card p-6 rounded-2xl shadow-md space-y-4 bg-emerald-50/50 border-emerald-200">
+                    <h2 class="font-bold text-lg text-brand-900"><i class="fa-solid fa-percent text-brand-600 mr-2"></i>Taxa Recomendada</h2>
+                    <p id="perguntaTaxa" class="text-sm text-slate-700"></p>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
-                        <button id="usarTaxa" class="bg-brand-600 hover:bg-brand-700 text-white font-semibold py-2.5 px-4 rounded-xl shadow-sm transition-all text-sm">
-                            Sim, usar a taxa
-                        </button>
-                        <button id="trocarTaxa" class="bg-white border border-brand-300 text-brand-700 hover:bg-brand-50 font-semibold py-2.5 px-4 rounded-xl transition-all text-sm">
-                            Usar outra taxa
-                        </button>
+                        <button id="usarTaxa" class="bg-brand-600 text-white font-semibold py-2.5 px-4 rounded-xl text-sm">Sim, usar taxa</button>
+                        <button id="trocarTaxa" class="bg-white border border-brand-300 text-brand-700 font-semibold py-2.5 px-4 rounded-xl text-sm">Usar outra taxa</button>
                     </div>
-
-                    <div id="taxaPersonalizada" class="hidden pt-3 border-t border-brand-200 space-y-3">
-                        <label for="novaTaxa" class="block text-sm font-semibold text-slate-700">Digite a taxa personalizada (%)</label>
-                        <input id="novaTaxa" type="text" inputmode="decimal" placeholder="Ex.: 10" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-brand-600 outline-none">
-                        <p class="text-xs text-slate-500">Informe somente o número da porcentagem (ex: 3.5). O resultado será calculado imediatamente.</p>
-                        <button id="aplicarTaxa" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-semibold py-2.5 rounded-xl text-sm transition-all shadow-sm">
-                            Calcular com esta taxa
-                        </button>
+                    <div id="taxaPersonalizada" class="hidden pt-3 border-t space-y-3">
+                        <label for="novaTaxa" class="block text-sm font-semibold text-slate-700">Porcentagem personalizada (%)</label>
+                        <input id="novaTaxa" type="text" inputmode="decimal" placeholder="Ex.: 10" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 outline-none">
+                        <button id="aplicarTaxa" class="w-full bg-brand-600 text-white font-semibold py-2.5 rounded-xl text-sm">Calcular com nova taxa</button>
                     </div>
-
-                    <div id="erroTaxa" class="hidden p-3 bg-red-50 border border-red-200 text-red-700 text-sm rounded-xl"></div>
                 </div>
 
-                <!-- Calculation Result Card -->
-                <div id="resultado" class="hidden glass-card p-6 rounded-2xl border border-emerald-300 shadow-lg space-y-5 bg-white">
-                    <div class="flex justify-between items-center border-b pb-3">
-                        <h2 class="font-bold text-xl text-brand-900 flex items-center gap-2">
-                            <i class="fa-solid fa-circle-check text-emerald-600"></i> Resultado
-                        </h2>
-                        <span class="text-xs font-semibold bg-emerald-100 text-emerald-800 px-3 py-1 rounded-full" id="resStatus">Pronto</span>
-                    </div>
-
-                    <div class="text-sm">
-                        <span class="text-slate-500">Tanque:</span> <strong id="nomeTanque" class="text-brand-900">Não identificado</strong>
-                    </div>
-
-                    <!-- Highlight Box -->
+                <!-- Resultado -->
+                <div id="resultado" class="hidden glass-card p-6 rounded-2xl shadow-lg space-y-4">
+                    <h2 class="font-bold text-xl text-brand-900 border-b pb-2"><i class="fa-solid fa-circle-check text-emerald-600 mr-2"></i>Resultado do Cálculo</h2>
                     <div class="bg-brand-50 border border-brand-200 p-4 rounded-xl text-center">
                         <span class="text-xs uppercase font-bold text-brand-700 tracking-wider">Ração Recomendada por Dia</span>
                         <div id="diaria" class="text-3xl font-black text-brand-700 mt-1">—</div>
                     </div>
-
-                    <div class="grid grid-cols-2 gap-3">
-                        <div class="p-3 border border-slate-200 rounded-xl bg-slate-50/50">
-                            <span class="block text-xs text-slate-500 font-medium">Por Trato</span>
-                            <strong id="porTrato" class="text-base text-brand-900">—</strong>
-                        </div>
-                        <div class="p-3 border border-slate-200 rounded-xl bg-slate-50/50">
-                            <span class="block text-xs text-slate-500 font-medium">Taxa Utilizada</span>
-                            <strong id="taxa" class="text-base text-brand-900">—</strong>
-                        </div>
-                        <div class="p-3 border border-slate-200 rounded-xl bg-slate-50/50">
-                            <span class="block text-xs text-slate-500 font-medium">Peso Médio / Peixe</span>
-                            <strong id="medio" class="text-base text-brand-900">—</strong>
-                        </div>
-                        <div class="p-3 border border-slate-200 rounded-xl bg-slate-50/50">
-                            <span class="block text-xs text-slate-500 font-medium">Tratos / Dia</span>
-                            <strong id="numTratos" class="text-base text-brand-900">—</strong>
-                        </div>
+                    <div class="grid grid-cols-2 gap-3 text-sm">
+                        <div class="p-3 border rounded-xl bg-slate-50"><span class="block text-xs text-slate-500">Por Trato</span><strong id="porTrato" class="text-brand-900">—</strong></div>
+                        <div class="p-3 border rounded-xl bg-slate-50"><span class="block text-xs text-slate-500">Taxa Utilizada</span><strong id="taxa" class="text-brand-900">—</strong></div>
+                        <div class="p-3 border rounded-xl bg-slate-50"><span class="block text-xs text-slate-500">Peso Médio / Peixe</span><strong id="medio" class="text-brand-900">—</strong></div>
+                        <div class="p-3 border rounded-xl bg-slate-50"><span class="block text-xs text-slate-500">Tratos / Dia</span><strong id="numTratos" class="text-brand-900">—</strong></div>
                     </div>
-
-                    <div class="space-y-1.5 text-xs text-slate-600 border-t pt-3">
+                    <div class="text-xs text-slate-600 border-t pt-3 space-y-1">
                         <div><b>Fase:</b> <span id="fase">—</span></div>
                         <div><b>Ração Recomendada:</b> <span id="caracteristica" class="font-semibold text-brand-700">—</span></div>
-                        <div><b>Faixa de Peso na Tabela:</b> <span id="faixa">—</span></div>
+                        <div><b>Faixa de Peso:</b> <span id="faixa">—</span></div>
                     </div>
-
                     <div class="flex flex-col sm:flex-row gap-2 pt-2">
-                        <button id="salvarTanqueAtivo" class="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2.5 px-4 rounded-xl text-sm transition-all shadow-sm flex items-center justify-center space-x-2">
-                            <i class="fa-solid fa-water"></i>
-                            <span>Salvar em Tanques Ativos</span>
+                        <button id="salvarTanqueAtivo" class="flex-1 bg-emerald-600 text-white font-semibold py-2.5 px-4 rounded-xl text-sm flex items-center justify-center space-x-2">
+                            <i class="fa-solid fa-water"></i><span>Salvar em Tanques Ativos</span>
                         </button>
-                        <button id="novo" class="bg-slate-200 hover:bg-slate-300 text-slate-800 font-semibold py-2.5 px-4 rounded-xl text-sm transition-all">
-                            Novo Cálculo
-                        </button>
+                        <button id="novo" class="bg-slate-200 text-slate-800 font-semibold py-2.5 px-4 rounded-xl text-sm">Novo Cálculo</button>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- TAB 3: GERENCIADOR DE TANQUES ATIVOS -->
+        <!-- ABA 3: TANQUES ATIVOS -->
         <section id="tab-tanques" class="tab-content hidden space-y-6">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
                     <h1 class="text-2xl font-bold text-brand-900">Tanques em Acompanhamento</h1>
-                    <p class="text-slate-500 text-sm">Gerencie os lotes ativos da propriedade e suas metas nutricionais.</p>
+                    <p class="text-slate-500 text-sm">Gerencie os lotes ativos da propriedade.</p>
                 </div>
-                <button onclick="abrirModalTanque()" class="bg-brand-600 hover:bg-brand-700 text-white font-semibold px-4 py-2.5 rounded-xl text-sm transition-all shadow flex items-center justify-center space-x-2">
-                    <i class="fa-solid fa-plus"></i>
-                    <span>Adicionar Tanque</span>
+                <button onclick="abrirModalTanque()" class="bg-brand-600 text-white font-semibold px-4 py-2.5 rounded-xl text-sm shadow flex items-center justify-center space-x-2">
+                    <i class="fa-solid fa-plus"></i><span>Adicionar Tanque</span>
                 </button>
             </div>
-
-            <!-- List of Active Tanks -->
-            <div id="gridTanques" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-                <!-- Dynamic Content via JavaScript -->
-            </div>
+            <div id="gridTanques" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"></div>
         </section>
 
-        <!-- TAB 4: HISTÓRICO DE CÁLCULOS -->
+        <!-- ABA 4: HISTÓRICO -->
         <section id="tab-historico" class="tab-content hidden space-y-6">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                <div>
-                    <h1 class="text-2xl font-bold text-brand-900">Histórico de Cálculos</h1>
-                    <p class="text-slate-500 text-sm">Registros salvos localmente neste dispositivo.</p>
-                </div>
+                <h1 class="text-2xl font-bold text-brand-900">Histórico de Cálculos</h1>
                 <div class="flex items-center space-x-2">
-                    <button id="exportarJson" class="bg-brand-100 hover:bg-brand-200 text-brand-700 font-semibold px-3.5 py-2 rounded-xl text-xs transition-all flex items-center space-x-1">
-                        <i class="fa-solid fa-file-code"></i>
-                        <span>JSON</span>
-                    </button>
-                    <button id="exportarCsv" class="bg-brand-100 hover:bg-brand-200 text-brand-700 font-semibold px-3.5 py-2 rounded-xl text-xs transition-all flex items-center space-x-1">
-                        <i class="fa-solid fa-file-csv"></i>
-                        <span>CSV</span>
-                    </button>
-                    <button id="limparHistorico" class="bg-red-100 hover:bg-red-200 text-red-700 font-semibold px-3.5 py-2 rounded-xl text-xs transition-all flex items-center space-x-1">
-                        <i class="fa-solid fa-trash-can"></i>
-                        <span>Limpar</span>
-                    </button>
+                    <button id="exportarJson" class="bg-brand-100 text-brand-700 font-semibold px-3 py-2 rounded-xl text-xs"><i class="fa-solid fa-file-code mr-1"></i>JSON</button>
+                    <button id="exportarCsv" class="bg-brand-100 text-brand-700 font-semibold px-3 py-2 rounded-xl text-xs"><i class="fa-solid fa-file-csv mr-1"></i>CSV</button>
+                    <button id="limparHistorico" class="bg-red-100 text-red-700 font-semibold px-3 py-2 rounded-xl text-xs"><i class="fa-solid fa-trash-can mr-1"></i>Limpar</button>
                 </div>
             </div>
-
-            <!-- Filter / Search -->
-            <div class="glass-card p-4 rounded-2xl border border-slate-200/80 shadow-sm flex items-center space-x-3">
+            <div class="glass-card p-3 rounded-2xl shadow-sm flex items-center space-x-2">
                 <i class="fa-solid fa-magnifying-glass text-slate-400 pl-2"></i>
-                <input id="buscaHistorico" type="text" placeholder="Buscar por tanque, data ou fase..." class="w-full bg-transparent outline-none text-sm text-slate-700">
+                <input id="buscaHistorico" type="text" placeholder="Buscar no histórico..." class="w-full bg-transparent outline-none text-sm">
             </div>
-
-            <!-- History List -->
-            <div id="historico" class="space-y-3">
-                <!-- Dynamic Content via JS -->
-            </div>
+            <div id="historico" class="space-y-3"></div>
         </section>
 
-        <!-- TAB 5: TABELA DE REFERÊNCIA SAMARIA -->
+        <!-- ABA 5: TABELA SAMARIA -->
         <section id="tab-tabela" class="tab-content hidden space-y-6">
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                <div>
-                    <h1 class="text-2xl font-bold text-brand-900">Tabela de Alimentação Samaria</h1>
-                    <p class="text-slate-500 text-sm">Matriz técnica de referência para recomendação de ração e granulo.</p>
-                </div>
-                <div class="relative w-full sm:w-64">
-                    <input id="filtroTabela" type="text" placeholder="Filtrar por peso ou fase..." class="w-full pl-9 pr-4 py-2 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-brand-600 outline-none">
-                    <i class="fa-solid fa-filter absolute left-3 top-3 text-slate-400 text-xs"></i>
-                </div>
-            </div>
-
-            <!-- Reference Table Card -->
-            <div class="glass-card rounded-2xl border border-slate-200/80 shadow-sm overflow-hidden">
+            <h1 class="text-2xl font-bold text-brand-900">Tabela Alimentar Samaria</h1>
+            <div class="glass-card rounded-2xl shadow-sm overflow-hidden">
                 <div class="overflow-x-auto">
-                    <table class="w-full text-left border-collapse">
+                    <table class="w-full text-left border-collapse min-w-[500px]">
                         <thead>
-                            <tr class="bg-brand-600 text-white text-xs uppercase tracking-wider">
+                            <tr class="bg-brand-600 text-white text-xs uppercase">
                                 <th class="p-3.5">Fase</th>
                                 <th class="p-3.5">Faixa Peso (g)</th>
-                                <th class="p-3.5">Granulometria / Especificação</th>
-                                <th class="p-3.5 text-right">Taxa Recom. (%)</th>
+                                <th class="p-3.5">Granulometria</th>
+                                <th class="p-3.5 text-right">Taxa (%)</th>
                             </tr>
                         </thead>
-                        <tbody id="corpoTabelaRef" class="divide-y divide-slate-200 text-sm">
-                            <!-- Populated by Javascript -->
-                        </tbody>
+                        <tbody id="corpoTabelaRef" class="divide-y divide-slate-200 text-sm"></tbody>
                     </table>
                 </div>
             </div>
@@ -473,803 +287,193 @@ button{font:inherit;font-weight:700;border:0;border-radius:12px;min-height:48px;
 
     </main>
 
-    <!-- Modal Adicionar / Editar Tanque -->
-    <div id="modalTanque" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl shadow-xl w-full max-w-md overflow-hidden animate-fade-in">
-            <div class="bg-brand-600 text-white p-4 flex justify-between items-center">
-                <h3 class="font-bold text-lg" id="modalTanqueTitulo">Novo Tanque</h3>
-                <button onclick="fecharModalTanque()" class="text-white/80 hover:text-white"><i class="fa-solid fa-xmark text-xl"></i></button>
-            </div>
-            <form id="formTanque" class="p-5 space-y-4">
-                <input type="hidden" id="tanqueId">
-                <div>
-                    <label class="block text-xs font-semibold text-slate-700 mb-1">Nome do Tanque</label>
-                    <input id="mNome" type="text" required placeholder="Ex.: TE-01" class="w-full px-3 py-2 border rounded-xl outline-none focus:ring-2 focus:ring-brand-600 text-sm">
-                </div>
-                <div class="grid grid-cols-2 gap-3">
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-700 mb-1">Qtd. Peixes</label>
-                        <input id="mQtd" type="number" required placeholder="Ex.: 2000" class="w-full px-3 py-2 border rounded-xl outline-none focus:ring-2 focus:ring-brand-600 text-sm">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-700 mb-1">Peso Médio (g)</label>
-                        <input id="mPesoMedio" type="number" step="0.01" required placeholder="Ex.: 150" class="w-full px-3 py-2 border rounded-xl outline-none focus:ring-2 focus:ring-brand-600 text-sm">
-                    </div>
-                </div>
-                <div class="grid grid-cols-2 gap-3">
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-700 mb-1">Tratos / dia</label>
-                        <input id="mTratos" type="number" required placeholder="Ex.: 4" value="4" class="w-full px-3 py-2 border rounded-xl outline-none focus:ring-2 focus:ring-brand-600 text-sm">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-700 mb-1">Taxa Ração (%)</label>
-                        <input id="mTaxa" type="number" step="0.1" required placeholder="Ex.: 4.2" class="w-full px-3 py-2 border rounded-xl outline-none focus:ring-2 focus:ring-brand-600 text-sm">
-                    </div>
-                </div>
-                <div class="flex justify-end space-x-2 pt-3 border-t">
-                    <button type="button" onclick="fecharModalTanque()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-sm font-semibold rounded-xl">Cancelar</button>
-                    <button type="submit" class="px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white text-sm font-semibold rounded-xl shadow-sm">Salvar Tanque</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- Application Script -->
+    <!-- Script de Funcionamento Integrado -->
     <script>
-        // Samaria Official Feed Reference Matrix
-        const tabela = [
-            {"minimo": 0.5, "maximo": 1.5, "caracteristica": "Pó", "fase": "Inicial", "taxa": 14},
-            {"minimo": 1.5, "maximo": 3, "caracteristica": "Ext. (1,2mm)", "fase": "Inicial", "taxa": 13},
-            {"minimo": 3, "maximo": 5.5, "caracteristica": "Ext. (1,2mm)", "fase": "Inicial", "taxa": 12},
-            {"minimo": 5.5, "maximo": 9, "caracteristica": "Ext. (1,8mm)", "fase": "Inicial", "taxa": 11},
-            {"minimo": 9, "maximo": 15, "caracteristica": "Ext. (1,8mm)", "fase": "Inicial", "taxa": 10},
-            {"minimo": 15, "maximo": 23, "caracteristica": "Ext. (2-3mm)", "fase": "Inicial", "taxa": 9},
-            {"minimo": 23, "maximo": 33, "caracteristica": "Ext. (2-3mm)", "fase": "Juvenil", "taxa": 7},
-            {"minimo": 33, "maximo": 45, "caracteristica": "Ext. (2-3mm)", "fase": "Juvenil", "taxa": 6},
-            {"minimo": 45, "maximo": 60, "caracteristica": "Ext. (3-4mm)", "fase": "Juvenil", "taxa": 5.5},
-            {"minimo": 60, "maximo": 80, "caracteristica": "Ext. (3-4mm)", "fase": "Juvenil", "taxa": 5},
-            {"minimo": 80, "maximo": 105, "caracteristica": "Ext. (3-4mm)", "fase": "Juvenil", "taxa": 4.8},
-            {"minimo": 105, "maximo": 135, "caracteristica": "Ext. (4-6mm)", "fase": "Crescimento", "taxa": 4.6},
-            {"minimo": 135, "maximo": 170, "caracteristica": "Ext. (4-6mm)", "fase": "Crescimento", "taxa": 4.2},
-            {"minimo": 170, "maximo": 210, "caracteristica": "Ext. (4-6mm)", "fase": "Crescimento", "taxa": 3.8},
-            {"minimo": 210, "maximo": 255, "caracteristica": "Ext. (4-6mm)", "fase": "Crescimento", "taxa": 3.6},
-            {"minimo": 255, "maximo": 305, "caracteristica": "Ext. (4-6mm)", "fase": "Crescimento", "taxa": 3.4},
-            {"minimo": 305, "maximo": 355, "caracteristica": "Ext. (4-6mm)", "fase": "Crescimento", "taxa": 3},
-            {"minimo": 355, "maximo": 405, "caracteristica": "Ext. (4-6mm)", "fase": "Crescimento", "taxa": 2.7},
-            {"minimo": 405, "maximo": 455, "caracteristica": "Ext. (4-6mm)", "fase": "Crescimento", "taxa": 2.5},
-            {"minimo": 455, "maximo": 505, "caracteristica": "Ext. (4-6mm)", "fase": "Crescimento", "taxa": 2.4},
-            {"minimo": 505, "maximo": 555, "caracteristica": "Ext. (4-6mm)", "fase": "Crescimento", "taxa": 2.2},
-            {"minimo": 555, "maximo": 605, "caracteristica": "Ext. (6-8mm)", "fase": "Engorda", "taxa": 2.1},
-            {"minimo": 605, "maximo": 655, "caracteristica": "Ext. (6-8mm)", "fase": "Engorda", "taxa": 2},
-            {"minimo": 655, "maximo": 705, "caracteristica": "Ext. (6-8mm)", "fase": "Engorda", "taxa": 1.8},
-            {"minimo": 705, "maximo": 755, "caracteristica": "Ext. (6-8mm)", "fase": "Engorda", "taxa": 1.7},
-            {"minimo": 755, "maximo": 805, "caracteristica": "Ext. (6-8mm)", "fase": "Engorda", "taxa": 1.6},
-            {"minimo": 805, "maximo": 855, "caracteristica": "Ext. (6-8mm)", "fase": "Engorda", "taxa": 1.5},
-            {"minimo": 855, "maximo": 905, "caracteristica": "Ext. (6-8mm)", "fase": "Engorda", "taxa": 1.4},
-            {"minimo": 905, "maximo": 955, "caracteristica": "Ext. (6-8mm)", "fase": "Engorda", "taxa": 1.4},
-            {"minimo": 955, "maximo": 1005, "caracteristica": "Ext. (6-8mm)", "fase": "Engorda", "taxa": 1.3},
-            {"minimo": 1005, "maximo": 1055, "caracteristica": "Ext. (6-8mm)", "fase": "Engorda", "taxa": 1.25},
-            {"minimo": 1055, "maximo": 1105, "caracteristica": "Ext. (6-8mm)", "fase": "Engorda", "taxa": 1.2}
-        ];
+        const tabela = [{"minimo":0.5,"maximo":1.5,"caracteristica":"Pó","fase":"Inicial","taxa":14},{"minimo":1.5,"maximo":3,"caracteristica":"Ext. (1,2mm)","fase":"Inicial","taxa":13},{"minimo":3,"maximo":5.5,"caracteristica":"Ext. (1,2mm)","fase":"Inicial","taxa":12},{"minimo":5.5,"maximo":9,"caracteristica":"Ext. (1,8mm)","fase":"Inicial","taxa":11},{"minimo":9,"maximo":15,"caracteristica":"Ext. (1,8mm)","fase":"Inicial","taxa":10},{"minimo":15,"maximo":23,"caracteristica":"Ext. (2-3mm)","fase":"Inicial","taxa":9},{"minimo":23,"maximo":33,"caracteristica":"Ext. (2-3mm)","fase":"Juvenil","taxa":7},{"minimo":33,"maximo":45,"caracteristica":"Ext. (2-3mm)","fase":"Juvenil","taxa":6},{"minimo":45,"maximo":60,"caracteristica":"Ext. (3-4mm)","fase":"Juvenil","taxa":5.5},{"minimo":60,"maximo":80,"caracteristica":"Ext. (3-4mm)","fase":"Juvenil","taxa":5},{"minimo":80,"maximo":105,"caracteristica":"Ext. (3-4mm)","fase":"Juvenil","taxa":4.8},{"minimo":105,"maximo":135,"caracteristica":"Ext. (4-6mm)","fase":"Crescimento","taxa":4.6},{"minimo":135,"maximo":170,"caracteristica":"Ext. (4-6mm)","fase":"Crescimento","taxa":4.2},{"minimo":170,"maximo":210,"caracteristica":"Ext. (4-6mm)","fase":"Crescimento","taxa":3.8},{"minimo":210,"maximo":255,"caracteristica":"Ext. (4-6mm)","fase":"Crescimento","taxa":3.6},{"minimo":255,"maximo":305,"caracteristica":"Ext. (4-6mm)","fase":"Crescimento","taxa":3.4},{"minimo":305,"maximo":355,"caracteristica":"Ext. (4-6mm)","fase":"Crescimento","taxa":3},{"minimo":355,"maximo":405,"caracteristica":"Ext. (4-6mm)","fase":"Crescimento","taxa":2.7},{"minimo":405,"maximo":455,"caracteristica":"Ext. (4-6mm)","fase":"Crescimento","taxa":2.5},{"minimo":455,"maximo":505,"caracteristica":"Ext. (4-6mm)","fase":"Crescimento","taxa":2.4},{"minimo":505,"maximo":555,"caracteristica":"Ext. (4-6mm)","fase":"Crescimento","taxa":2.2},{"minimo":555,"maximo":605,"caracteristica":"Ext. (6-8mm)","fase":"Engorda","taxa":2.1},{"minimo":605,"maximo":655,"caracteristica":"Ext. (6-8mm)","fase":"Engorda","taxa":2},{"minimo":655,"maximo":705,"caracteristica":"Ext. (6-8mm)","fase":"Engorda","taxa":1.8},{"minimo":705,"maximo":755,"caracteristica":"Ext. (6-8mm)","fase":"Engorda","taxa":1.7},{"minimo":755,"maximo":805,"caracteristica":"Ext. (6-8mm)","fase":"Engorda","taxa":1.6},{"minimo":805,"maximo":855,"caracteristica":"Ext. (6-8mm)","fase":"Engorda","taxa":1.5},{"minimo":855,"maximo":905,"caracteristica":"Ext. (6-8mm)","fase":"Engorda","taxa":1.4},{"minimo":905,"maximo":955,"caracteristica":"Ext. (6-8mm)","fase":"Engorda","taxa":1.4},{"minimo":955,"maximo":1005,"caracteristica":"Ext. (6-8mm)","fase":"Engorda","taxa":1.3},{"minimo":1005,"maximo":1055,"caracteristica":"Ext. (6-8mm)","fase":"Engorda","taxa":1.25},{"minimo":1055,"maximo":1105,"caracteristica":"Ext. (6-8mm)","fase":"Engorda","taxa":1.2}];
 
-        // Storage Keys
         const CHAVE_HISTORICO = 'samaria_calculadora_historico_v2';
         const CHAVE_TANQUES = 'samaria_tanques_ativos_v1';
-
-        // State Variables
         const $ = id => document.getElementById(id);
         const fmt = n => Number(n).toLocaleString('pt-BR', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-        let calculoPendente = null;
-        let chartRacaoInst = null;
-        let chartFasesInst = null;
-        let chartHistoricoInst = null;
+        let calculoPendente = null, chartRacaoInst = null, chartFasesInst = null;
 
-        // Navigation
         function switchTab(targetTabId) {
             document.querySelectorAll('.tab-content').forEach(tab => tab.classList.add('hidden'));
             document.querySelectorAll('.nav-btn').forEach(btn => {
                 btn.classList.remove('bg-brand-600', 'text-white');
                 btn.classList.add('text-slate-300');
             });
-
             $(targetTabId).classList.remove('hidden');
             const activeBtn = document.querySelector(`[data-target="${targetTabId}"]`);
             if (activeBtn) {
                 activeBtn.classList.add('bg-brand-600', 'text-white');
                 activeBtn.classList.remove('text-slate-300');
             }
-
-            if (targetTabId === 'tab-dashboard') {
-                atualizarDashboard();
-            }
+            if (targetTabId === 'tab-dashboard') atualizarDashboard();
         }
 
-        // Mobile Menu Toggle
         document.addEventListener('DOMContentLoaded', () => {
-            const toggleBtn = $('toggleMobileMenu');
-            const sidebar = $('sidebar');
-            toggleBtn.addEventListener('click', () => {
-                sidebar.classList.toggle('hidden');
-            });
-
+            $('btnMobileMenu')?.addEventListener('click', () => $('sidebar').classList.toggle('hidden'));
             document.querySelectorAll('.nav-btn').forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    const target = btn.getAttribute('data-target');
-                    switchTab(target);
-                    if (window.innerWidth < 768) {
-                        sidebar.classList.add('hidden');
-                    }
+                btn.addEventListener('click', () => {
+                    switchTab(btn.getAttribute('data-target'));
+                    if (window.innerWidth < 768) $('sidebar').classList.add('hidden');
                 });
             });
-
             renderizarTabelaRef();
             renderizarHistorico();
             renderizarTanques();
             atualizarDashboard();
         });
 
-        // Local Storage Helpers
-        function lerHistorico() {
-            try { return JSON.parse(localStorage.getItem(CHAVE_HISTORICO) || '[]'); } catch(e) { return []; }
-        }
-        function salvarHistorico(lista) {
-            try { localStorage.setItem(CHAVE_HISTORICO, JSON.stringify(lista)); return true; } catch(e) { return false; }
-        }
-        function lerTanques() {
-            try {
-                const data = JSON.parse(localStorage.getItem(CHAVE_TANQUES) || '[]');
-                if (!data.length) {
-                    // Seed initial demo tanks if empty
-                    const demoTanks = [
-                        { id: 't1', nome: 'Tanque 01', quantidade: 2500, pesoMedio: 120, tratos: 4, taxa: 4.6, fase: 'Crescimento', racaoSpec: 'Ext. (4-6mm)' },
-                        { id: 't2', nome: 'Tanque 02', quantidade: 1800, pesoMedio: 420, tratos: 3, taxa: 2.5, fase: 'Crescimento', racaoSpec: 'Ext. (4-6mm)' },
-                        { id: 't3', nome: 'Tanque 03', quantidade: 3000, pesoMedio: 680, tratos: 2, taxa: 1.8, fase: 'Engorda', racaoSpec: 'Ext. (6-8mm)' }
-                    ];
-                    localStorage.setItem(CHAVE_TANQUES, JSON.stringify(demoTanks));
-                    return demoTanks;
-                }
-                return data;
-            } catch(e) { return []; }
-        }
-        function salvarTanques(lista) {
-            try { localStorage.setItem(CHAVE_TANQUES, JSON.stringify(lista)); return true; } catch(e) { return false; }
-        }
-
-        // --- CALCULATOR LOGIC ---
-        function mostrarErro(msg) {
-            $('erro').textContent = msg;
-            $('erro').classList.remove('hidden');
-            $('resultado').classList.add('hidden');
-            $('decisaoTaxa').classList.add('hidden');
-        }
+        function lerHistorico() { try { return JSON.parse(localStorage.getItem(CHAVE_HISTORICO) || '[]'); } catch(e) { return []; } }
+        function salvarHistorico(l) { try { localStorage.setItem(CHAVE_HISTORICO, JSON.stringify(l)); return true; } catch(e) { return false; } }
+        function lerTanques() { try { return JSON.parse(localStorage.getItem(CHAVE_TANQUES) || '[]'); } catch(e) { return []; } }
+        function salvarTanques(l) { try { localStorage.setItem(CHAVE_TANQUES, JSON.stringify(l)); return true; } catch(e) { return false; } }
 
         function calcular() {
             $('erro').classList.add('hidden');
-            $('erroTaxa').classList.add('hidden');
-
             const quantidade = Number($('quantidade').value.trim());
             let pesoTexto = $('peso').value.trim().toLowerCase().replace(/\s/g, '').replace(',', '.');
-            let pesoTotal = 0;
-
-            // Handle kg suffix vs grams
-            if (pesoTexto.endsWith('kg')) {
-                pesoTotal = Number(pesoTexto.replace('kg', '')) * 1000;
-            } else if (pesoTexto.endsWith('g')) {
-                pesoTotal = Number(pesoTexto.replace('g', ''));
-            } else {
-                pesoTotal = Number(pesoTexto);
-                // If user enters a small number like "2.5", treat as kg if total <= 50kg contextually
-                if (pesoTotal > 0 && pesoTotal < 50 && quantidade > 100) {
-                    pesoTotal = pesoTotal * 1000;
-                }
-            }
-
+            let pesoTotal = pesoTexto.endsWith('kg') ? Number(pesoTexto.replace('kg', '')) * 1000 : Number(pesoTexto.replace('g', ''));
+            if (pesoTotal > 0 && pesoTotal < 50 && quantidade > 100) pesoTotal *= 1000;
             const tratos = Number($('tratos').value.trim());
 
-            if (!Number.isInteger(quantidade) || quantidade <= 0 || !Number.isFinite(pesoTotal) || pesoTotal <= 0 || !Number.isInteger(tratos) || tratos <= 0) {
-                mostrarErro('Informe a quantidade de peixes, peso total e tratos por dia válidos.');
-                return;
+            if (!quantidade || quantidade <= 0 || !pesoTotal || pesoTotal <= 0 || !tratos || tratos <= 0) {
+                $('erro').textContent = 'Informe valores válidos para quantidade, peso e tratos.';
+                $('erro').classList.remove('hidden'); return;
             }
-
             const medio = pesoTotal / quantidade;
             const rec = tabela.find(x => medio >= x.minimo && medio < x.maximo);
+            if (!rec) { $('erro').textContent = `Peso médio de ${fmt(medio)}g fora da faixa da tabela.`; $('erro').classList.remove('hidden'); return; }
 
-            if (!rec) {
-                mostrarErro(`A tabela não possui uma faixa para o peso médio de ${fmt(medio)} g. Confira os limites.`);
-                return;
-            }
-
-            calculoPendente = {
-                quantidade,
-                pesoTotal,
-                tratos,
-                medio,
-                rec,
-                tanque: $('tanque').value.trim() || 'Não identificado'
-            };
-
+            calculoPendente = { quantidade, pesoTotal, tratos, medio, rec, tanque: $('tanque').value.trim() || 'Não identificado' };
             $('resultado').classList.add('hidden');
-            $('perguntaTaxa').innerHTML = `Para o tanque <b>${calculoPendente.tanque}</b>, o peso médio é <b>${fmt(medio)} g</b> por peixe. A tabela da Samaria recomenda <b>${String(rec.taxa).replace('.', ',')}%</b> de alimentação diária. Deseja aplicar essa taxa?`;
-            $('usarTaxa').textContent = `Sim, usar ${String(rec.taxa).replace('.', ',')}%`;
-            $('taxaPersonalizada').classList.add('hidden');
-            $('novaTaxa').value = '';
-
+            $('perguntaTaxa').innerHTML = `Tanque <b>${calculoPendente.tanque}</b>: peso médio <b>${fmt(medio)}g</b>. Taxa recomendada: <b>${rec.taxa}%</b>.`;
+            $('usarTaxa').textContent = `Usar ${rec.taxa}%`;
             $('decisaoTaxa').classList.remove('hidden');
-            $('decisaoTaxa').scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
 
         function mostrarResultado(taxaUsada) {
             if (!calculoPendente) return;
-
-            const { pesoTotal, tratos, medio, rec, tanque, quantidade } = calculoPendente;
+            const { pesoTotal, tratos, medio, rec, tanque } = calculoPendente;
             const diariaGrams = pesoTotal * (taxaUsada / 100);
             const porTratoGrams = diariaGrams / tratos;
 
-            // Formatted values
-            const diariaText = diariaGrams >= 1000 ? `${fmt(diariaGrams / 1000)} kg` : `${fmt(diariaGrams)} g`;
-            const porTratoText = porTratoGrams >= 1000 ? `${fmt(porTratoGrams / 1000)} kg` : `${fmt(porTratoGrams)} g`;
-
             $('nomeTanque').textContent = tanque;
-            $('diaria').textContent = diariaText;
-            $('porTrato').textContent = porTratoText;
-            $('taxa').textContent = `${String(taxaUsada).replace('.', ',')}%`;
+            $('diaria').textContent = diariaGrams >= 1000 ? `${fmt(diariaGrams/1000)} kg` : `${fmt(diariaGrams)} g`;
+            $('porTrato').textContent = porTratoGrams >= 1000 ? `${fmt(porTratoGrams/1000)} kg` : `${fmt(porTratoGrams)} g`;
+            $('taxa').textContent = `${taxaUsada}%`;
             $('medio').textContent = `${fmt(medio)} g`;
             $('numTratos').textContent = String(tratos);
-            $('fase').textContent = rec.fase ?? 'Não informada';
-            $('caracteristica').textContent = rec.caracteristica ?? 'Não informada';
+            $('fase').textContent = rec.fase;
+            $('caracteristica').textContent = rec.caracteristica;
             $('faixa').textContent = `${fmt(rec.minimo)} a ${fmt(rec.maximo)} g`;
 
             $('decisaoTaxa').classList.add('hidden');
             $('resultado').classList.remove('hidden');
-
             registrarCalculo(taxaUsada);
-            $('resultado').scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
 
-        // Calculator Listeners
         $('calcular').addEventListener('click', calcular);
-        ['quantidade', 'peso', 'tratos'].forEach(id => $(id).addEventListener('keydown', e => { if (e.key === 'Enter') calcular(); }));
-        $('usarTaxa').addEventListener('click', () => { if (calculoPendente) mostrarResultado(calculoPendente.rec.taxa); });
-        $('trocarTaxa').addEventListener('click', () => { $('taxaPersonalizada').classList.remove('hidden'); $('novaTaxa').focus(); });
+        $('usarTaxa').addEventListener('click', () => calculoPendente && mostrarResultado(calculoPendente.rec.taxa));
+        $('trocarTaxa').addEventListener('click', () => $('taxaPersonalizada').classList.remove('hidden'));
         $('aplicarTaxa').addEventListener('click', () => {
-            const texto = $('novaTaxa').value.trim().replace(',', '.');
-            const taxa = Number(texto);
-            if (!texto || !Number.isFinite(taxa) || taxa <= 0 || taxa > 100) {
-                $('erroTaxa').textContent = 'Digite uma taxa válida (ex: 3.5).';
-                $('erroTaxa').classList.remove('hidden');
-                return;
-            }
-            mostrarResultado(taxa);
-        });
-
-        $('novo').addEventListener('click', () => {
-            ['tanque', 'quantidade', 'peso', 'tratos', 'novaTaxa'].forEach(id => $(id).value = '');
-            $('resultado').classList.add('hidden');
-            $('decisaoTaxa').classList.add('hidden');
-            calculoPendente = null;
-            $('quantidade').focus();
+            const taxa = Number($('novaTaxa').value.replace(',', '.'));
+            if (taxa > 0 && taxa <= 100) mostrarResultado(taxa);
         });
 
         $('salvarTanqueAtivo').addEventListener('click', () => {
             if (!calculoPendente) return;
             const tanques = lerTanques();
-            const idExistente = tanques.findIndex(t => t.nome.toLowerCase() === calculoPendente.tanque.toLowerCase());
-
-            const novoTanque = {
-                id: idExistente >= 0 ? tanques[idExistente].id : 't_' + Date.now(),
-                nome: calculoPendente.tanque,
-                quantidade: calculoPendente.quantidade,
-                pesoMedio: Number(calculoPendente.medio.toFixed(2)),
-                tratos: calculoPendente.tratos,
-                taxa: calculoPendente.rec.taxa,
-                fase: calculoPendente.rec.fase,
-                racaoSpec: calculoPendente.rec.caracteristica
-            };
-
-            if (idExistente >= 0) {
-                tanques[idExistente] = novoTanque;
-            } else {
-                tanques.push(novoTanque);
-            }
-
-            salvarTanques(tanques);
-            renderizarTanques();
-            switchTab('tab-tanques');
+            const idEx = tanques.findIndex(t => t.nome.toLowerCase() === calculoPendente.tanque.toLowerCase());
+            const item = { id: idEx >= 0 ? tanques[idEx].id : 't_' + Date.now(), nome: calculoPendente.tanque, quantidade: calculoPendente.quantidade, pesoMedio: Number(calculoPendente.medio.toFixed(2)), tratos: calculoPendente.tratos, taxa: calculoPendente.rec.taxa, fase: calculoPendente.rec.fase, racaoSpec: calculoPendente.rec.caracteristica };
+            if (idEx >= 0) tanques[idEx] = item; else tanques.push(item);
+            salvarTanques(tanques); renderizarTanques(); switchTab('tab-tanques');
         });
 
-        // --- HISTORY MANAGEMENT ---
         function registrarCalculo(taxaUsada) {
-            if (!calculoPendente) return;
-            const p = calculoPendente;
-            const diariaGrams = p.pesoTotal * (taxaUsada / 100);
-            const lista = lerHistorico();
-            const agora = new Date();
-
-            const registro = {
-                id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
-                tanque: p.tanque,
-                data: agora.toLocaleDateString('pt-BR') + ' ' + agora.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }),
-                quantidade: p.quantidade,
-                pesoTotalGrams: Number(p.pesoTotal.toFixed(2)),
-                tratos: p.tratos,
-                medioGrams: Number(p.medio.toFixed(2)),
-                taxa: Number(taxaUsada.toFixed(2)),
-                diariaGrams: Number(diariaGrams.toFixed(2)),
-                fase: p.rec.fase,
-                caracteristica: p.rec.caracteristica
-            };
-
-            lista.unshift(registro);
-            salvarHistorico(lista);
-            renderizarHistorico();
+            const p = calculoPendente, diariaGrams = p.pesoTotal * (taxaUsada / 100), lista = lerHistorico(), agora = new Date();
+            lista.unshift({ id: Date.now().toString(36), tanque: p.tanque, data: agora.toLocaleDateString('pt-BR') + ' ' + agora.toLocaleTimeString('pt-BR', {hour:'2-digit', minute:'2-digit'}), quantidade: p.quantidade, pesoTotalGrams: p.pesoTotal, tratos: p.tratos, medioGrams: Number(p.medio.toFixed(2)), taxa: taxaUsada, diariaGrams, fase: p.rec.fase });
+            salvarHistorico(lista); renderizarHistorico();
         }
 
         function renderizarHistorico() {
-            const lista = lerHistorico();
-            const termo = ($('buscaHistorico').value || '').toLowerCase();
-            const area = $('historico');
-
-            const filtrados = lista.filter(item =>
-                (item.tanque || '').toLowerCase().includes(termo) ||
-                (item.data || '').toLowerCase().includes(termo) ||
-                (item.fase || '').toLowerCase().includes(termo)
-            );
-
-            if (!filtrados.length) {
-                area.innerHTML = `<div class="p-8 text-center text-slate-400 bg-white rounded-2xl border border-slate-200">
-                    <i class="fa-solid fa-folder-open text-3xl mb-2"></i>
-                    <p class="text-sm">Nenhum registro de cálculo encontrado.</p>
-                </div>`;
-                return;
-            }
-
-            area.innerHTML = filtrados.map(item => {
-                const kgRacao = (item.diariaGrams / 1000).toFixed(2);
-                const kgBiomassa = (item.pesoTotalGrams / 1000).toFixed(2);
-                return `
-                <div class="glass-card p-4 rounded-2xl border border-slate-200/80 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
+            const lista = lerHistorico(), area = $('historico');
+            if (!lista.length) { area.innerHTML = `<p class="text-sm text-slate-400 text-center p-4">Nenhum histórico salvo.</p>`; return; }
+            area.innerHTML = lista.map(i => `
+                <div class="glass-card p-4 rounded-xl flex justify-between items-center text-sm">
                     <div>
-                        <div class="flex items-center space-x-2">
-                            <span class="font-bold text-brand-900 text-base">${item.tanque}</span>
-                            <span class="text-xs bg-brand-100 text-brand-800 font-semibold px-2.5 py-0.5 rounded-full">${item.fase}</span>
-                        </div>
-                        <p class="text-xs text-slate-400 mt-0.5">${item.data}</p>
-                        <div class="text-xs text-slate-600 mt-2 grid grid-cols-2 sm:grid-cols-4 gap-2">
-                            <div><span class="text-slate-400">Ração Diária:</span> <b>${kgRacao} kg</b></div>
-                            <div><span class="text-slate-400">Biomassa:</span> <b>${kgBiomassa} kg</b></div>
-                            <div><span class="text-slate-400">Peso Médio:</span> <b>${item.medioGrams} g</b></div>
-                            <div><span class="text-slate-400">Taxa:</span> <b>${item.taxa}%</b></div>
-                        </div>
+                        <div class="font-bold text-brand-900">${i.tanque} <span class="text-xs bg-brand-100 text-brand-800 px-2 py-0.5 rounded-full ml-1">${i.fase}</span></div>
+                        <div class="text-xs text-slate-400 mt-1">${i.data} | Ração: <b>${fmt(i.diariaGrams/1000)} kg</b> | Taxa: ${i.taxa}%</div>
                     </div>
-                    <div class="flex items-center space-x-2 self-end md:self-center">
-                        <button onclick="reaproveitarHistorico('${item.id}')" class="px-3 py-1.5 bg-brand-100 hover:bg-brand-200 text-brand-700 text-xs font-semibold rounded-xl transition-all">
-                            <i class="fa-solid fa-rotate-left mr-1"></i> Carregar
-                        </button>
-                        <button onclick="excluirHistorico('${item.id}')" class="p-2 text-slate-400 hover:text-red-600 rounded-lg transition-all">
-                            <i class="fa-solid fa-trash-can"></i>
-                        </button>
-                    </div>
-                </div>`;
-            }).join('');
+                </div>
+            `).join('');
         }
 
-        function reaproveitarHistorico(id) {
-            const item = lerHistorico().find(x => x.id === id);
-            if (!item) return;
-            $('tanque').value = item.tanque === 'Não identificado' ? '' : item.tanque;
-            $('quantidade').value = item.quantidade;
-            $('peso').value = item.pesoTotalGrams;
-            $('tratos').value = item.tratos;
-            switchTab('tab-calculadora');
-        }
-
-        function excluirHistorico(id) {
-            const lista = lerHistorico().filter(x => x.id !== id);
-            salvarHistorico(lista);
-            renderizarHistorico();
-            atualizarDashboard();
-        }
-
-        $('buscaHistorico').addEventListener('input', renderizarHistorico);
-
-        $('limparHistorico').addEventListener('click', () => {
-            if (confirm('Deseja limpar todo o histórico de cálculos?')) {
-                salvarHistorico([]);
-                renderizarHistorico();
-                atualizarDashboard();
-            }
-        });
-
-        // Export Functions
-        $('exportarJson').addEventListener('click', () => {
-            const data = JSON.stringify(lerHistorico(), null, 2);
-            const blob = new Blob([data], { type: 'application/json' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `samaria_historico_${Date.now()}.json`;
-            a.click();
-        });
-
-        $('exportarCsv').addEventListener('click', () => {
-            const lista = lerHistorico();
-            if (!lista.length) return alert('Sem dados para exportar.');
-
-            let csv = 'Data,Tanque,Fase,Quantidade,PesoTotal_g,PesoMedio_g,Tratos,Taxa_Pct,RacaoDiaria_g\n';
-            lista.forEach(i => {
-                csv += `"${i.data}","${i.tanque}","${i.fase}",${i.quantidade},${i.pesoTotalGrams},${i.medioGrams},${i.tratos},${i.taxa},${i.diariaGrams}\n`;
-            });
-
-            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `samaria_historico_${Date.now()}.csv`;
-            a.click();
-        });
-
-        // --- TANKS MANAGEMENT ---
         function renderizarTanques() {
-            const tanques = lerTanques();
-            const grid = $('gridTanques');
-
-            if (!tanques.length) {
-                grid.innerHTML = `<div class="col-span-full p-8 text-center text-slate-400 bg-white rounded-2xl border">
-                    Nenhum tanque cadastrado ainda. Clique em "Adicionar Tanque".
-                </div>`;
-                return;
-            }
-
+            const tanques = lerTanques(), grid = $('gridTanques');
+            if (!tanques.length) { grid.innerHTML = `<p class="col-span-full text-slate-400 text-center p-4">Nenhum tanque cadastrado.</p>`; return; }
             grid.innerHTML = tanques.map(t => {
-                const biomassaKg = (t.quantidade * t.pesoMedio) / 1000;
-                const racaoDiariaKg = (biomassaKg * (t.taxa / 100));
-                const racaoTratoGrams = (racaoDiariaKg * 1000) / t.tratos;
-
+                const bio = (t.quantidade * t.pesoMedio) / 1000, rac = bio * (t.taxa / 100);
                 return `
-                <div class="glass-card p-5 rounded-2xl border border-slate-200/80 shadow-sm flex flex-col justify-between space-y-4">
-                    <div>
-                        <div class="flex justify-between items-start">
-                            <div>
-                                <h3 class="font-bold text-lg text-brand-900">${t.nome}</h3>
-                                <span class="text-xs bg-emerald-100 text-emerald-800 font-medium px-2.5 py-0.5 rounded-full inline-block mt-1">${t.fase}</span>
-                            </div>
-                            <div class="flex space-x-1">
-                                <button onclick="editarTanque('${t.id}')" class="p-1.5 text-slate-400 hover:text-brand-600 rounded"><i class="fa-solid fa-pen-to-square"></i></button>
-                                <button onclick="excluirTanque('${t.id}')" class="p-1.5 text-slate-400 hover:text-red-600 rounded"><i class="fa-solid fa-trash"></i></button>
-                            </div>
-                        </div>
-
-                        <div class="grid grid-cols-2 gap-3 mt-4 text-xs">
-                            <div class="bg-slate-50 p-2.5 rounded-xl border">
-                                <span class="text-slate-400 block">Peixes</span>
-                                <strong class="text-sm text-slate-800">${t.quantidade.toLocaleString('pt-BR')} un</strong>
-                            </div>
-                            <div class="bg-slate-50 p-2.5 rounded-xl border">
-                                <span class="text-slate-400 block">Peso Médio</span>
-                                <strong class="text-sm text-slate-800">${t.pesoMedio} g</strong>
-                            </div>
-                            <div class="bg-slate-50 p-2.5 rounded-xl border">
-                                <span class="text-slate-400 block">Biomassa Total</span>
-                                <strong class="text-sm text-brand-700">${fmt(biomassaKg)} kg</strong>
-                            </div>
-                            <div class="bg-slate-50 p-2.5 rounded-xl border">
-                                <span class="text-slate-400 block">Ração Diária</span>
-                                <strong class="text-sm text-brand-700">${fmt(racaoDiariaKg)} kg</strong>
-                            </div>
-                        </div>
+                <div class="glass-card p-4 rounded-xl space-y-3">
+                    <div class="flex justify-between items-start">
+                        <div><h3 class="font-bold text-brand-900">${t.nome}</h3><span class="text-xs bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full">${t.fase}</span></div>
+                        <button onclick="excluirTanque('${t.id}')" class="text-slate-400 hover:text-red-600"><i class="fa-solid fa-trash"></i></button>
                     </div>
-
-                    <div class="pt-3 border-t text-xs flex justify-between items-center text-slate-500">
-                        <span>${t.tratos} tratos/dia (${fmt(racaoTratoGrams)}g/trato)</span>
-                        <span class="font-semibold text-emerald-700">${t.racaoSpec || ''}</span>
+                    <div class="grid grid-cols-2 gap-2 text-xs">
+                        <div class="bg-slate-50 p-2 rounded">Peixes: <b>${t.quantidade}</b></div>
+                        <div class="bg-slate-50 p-2 rounded">Peso M.: <b>${t.pesoMedio}g</b></div>
+                        <div class="bg-slate-50 p-2 rounded">Biomassa: <b>${fmt(bio)} kg</b></div>
+                        <div class="bg-slate-50 p-2 rounded">Ração: <b>${fmt(rac)} kg</b></div>
                     </div>
                 </div>`;
             }).join('');
         }
 
-        function abrirModalTanque(tanque = null) {
-            $('modalTanqueTitulo').textContent = tanque ? 'Editar Tanque' : 'Novo Tanque';
-            $('tanqueId').value = tanque ? tanque.id : '';
-            $('mNome').value = tanque ? tanque.nome : '';
-            $('mQtd').value = tanque ? tanque.quantidade : '';
-            $('mPesoMedio').value = tanque ? tanque.pesoMedio : '';
-            $('mTratos').value = tanque ? tanque.tratos : 4;
-            $('mTaxa').value = tanque ? tanque.taxa : '';
-            $('modalTanque').classList.remove('hidden');
-        }
+        function excluirTanque(id) { salvarTanques(lerTanques().filter(t => t.id !== id)); renderizarTanques(); atualizarDashboard(); }
 
-        function fecharModalTanque() {
-            $('modalTanque').classList.add('hidden');
-        }
-
-        $('formTanque').addEventListener('submit', (e) => {
-            e.preventDefault();
-            const id = $('tanqueId').value || 't_' + Date.now();
-            const nome = $('mNome').value.trim();
-            const quantidade = Number($('mQtd').value);
-            const pesoMedio = Number($('mPesoMedio').value);
-            const tratos = Number($('mTratos').value);
-            const taxa = Number($('mTaxa').value);
-
-            // Lookup phase recommendation based on weight
-            const rec = tabela.find(x => pesoMedio >= x.minimo && pesoMedio < x.maximo) || { fase: 'Desconhecida', caracteristica: 'Ext. Padrão' };
-
-            const tanques = lerTanques();
-            const index = tanques.findIndex(t => t.id === id);
-
-            const item = { id, nome, quantidade, pesoMedio, tratos, taxa, fase: rec.fase, racaoSpec: rec.caracteristica };
-
-            if (index >= 0) tanques[index] = item;
-            else tanques.push(item);
-
-            salvarTanques(tanques);
-            renderizarTanques();
-            fecharModalTanque();
-            atualizarDashboard();
-        });
-
-        function editarTanque(id) {
-            const tanque = lerTanques().find(t => t.id === id);
-            if (tanque) abrirModalTanque(tanque);
-        }
-
-        function excluirTanque(id) {
-            if (confirm('Remover este tanque dos ativos?')) {
-                const tanques = lerTanques().filter(t => t.id !== id);
-                salvarTanques(tanques);
-                renderizarTanques();
-                atualizarDashboard();
-            }
-        }
-
-        // --- REFERENCE TABLE ---
         function renderizarTabelaRef() {
-            const filtro = ($('filtroTabela').value || '').toLowerCase();
-            const tbody = $('corpoTabelaRef');
-
-            const filtrados = tabela.filter(item =>
-                item.fase.toLowerCase().includes(filtro) ||
-                item.caracteristica.toLowerCase().includes(filtro) ||
-                `${item.minimo}`.includes(filtro) ||
-                `${item.maximo}`.includes(filtro)
-            );
-
-            tbody.innerHTML = filtrados.map(item => `
-                <tr class="hover:bg-slate-50 transition-colors">
-                    <td class="p-3.5"><span class="font-semibold text-brand-900">${item.fase}</span></td>
-                    <td class="p-3.5">${fmt(item.minimo)} g a ${fmt(item.maximo)} g</td>
-                    <td class="p-3.5 text-slate-600">${item.caracteristica}</td>
-                    <td class="p-3.5 text-right font-bold text-brand-600">${item.taxa}%</td>
+            $('corpoTabelaRef').innerHTML = tabela.map(i => `
+                <tr class="hover:bg-slate-50">
+                    <td class="p-3 font-semibold text-brand-900">${i.fase}</td>
+                    <td class="p-3">${fmt(i.minimo)}g a ${fmt(i.maximo)}g</td>
+                    <td class="p-3 text-slate-600">${i.caracteristica}</td>
+                    <td class="p-3 text-right font-bold text-brand-600">${i.taxa}%</td>
                 </tr>
             `).join('');
         }
 
-        $('filtroTabela').addEventListener('input', renderizarTabelaRef);
-
-        // --- DASHBOARD CHARTS & KPIS ---
         function atualizarDashboard() {
             const tanques = lerTanques();
-            const historico = lerHistorico();
-
-            // Calculate KPIs
-            let totalBiomassaKg = 0;
-            let totalRacaoKg = 0;
-            let somaPesos = 0;
-
+            let totalBio = 0, totalRac = 0, somaPesos = 0;
             tanques.forEach(t => {
                 const bio = (t.quantidade * t.pesoMedio) / 1000;
-                const rac = bio * (t.taxa / 100);
-                totalBiomassaKg += bio;
-                totalRacaoKg += rac;
-                somaPesos += t.pesoMedio;
+                totalBio += bio; totalRac += bio * (t.taxa / 100); somaPesos += t.pesoMedio;
             });
-
-            const pesoMedioGeral = tanques.length ? (somaPesos / tanques.length) : 0;
-
-            $('kpiBiomassa').textContent = `${fmt(totalBiomassaKg)} kg`;
-            $('kpiRacaoDiaria').textContent = `${fmt(totalRacaoKg)} kg`;
+            $('kpiBiomassa').textContent = `${fmt(totalBio)} kg`;
+            $('kpiRacaoDiaria').textContent = `${fmt(totalRac)} kg`;
             $('kpiTanquesAtivos').textContent = tanques.length;
-            $('kpiPesoMedio').textContent = `${fmt(pesoMedioGeral)} g`;
+            $('kpiPesoMedio').textContent = tanques.length ? `${fmt(somaPesos / tanques.length)} g` : '0 g';
 
-            // Render Charts
-            renderCharts(tanques, historico);
-        }
-
-        function renderCharts(tanques, historico) {
-            // Chart 1: Ração por Tanque
             const ctx1 = $('chartRacaoTanque').getContext('2d');
-            const labelsTanque = tanques.map(t => t.nome);
-            const dataRacaoTanque = tanques.map(t => ((t.quantidade * t.pesoMedio) / 1000) * (t.taxa / 100));
-
             if (chartRacaoInst) chartRacaoInst.destroy();
             chartRacaoInst = new Chart(ctx1, {
                 type: 'bar',
-                data: {
-                    labels: labelsTanque.length ? labelsTanque : ['Sem Tanques'],
-                    datasets: [{
-                        label: 'Ração Diária (kg)',
-                        data: dataRacaoTanque.length ? dataRacaoTanque : [0],
-                        backgroundColor: '#176b55',
-                        borderRadius: 8
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: { legend: { display: false } },
-                    scales: { y: { beginAtZero: true } }
-                }
+                data: { labels: tanques.map(t => t.nome), datasets: [{ label: 'Ração (kg)', data: tanques.map(t => ((t.quantidade * t.pesoMedio)/1000)*(t.taxa/100)), backgroundColor: '#176b55' }] },
+                options: { responsive: true, maintainAspectRatio: false }
             });
 
-            // Chart 2: Fases de Cultivo
             const ctx2 = $('chartFases').getContext('2d');
-            const fasesCount = {};
-            tanques.forEach(t => { fasesCount[t.fase] = (fasesCount[t.fase] || 0) + 1; });
-
+            const fasesCount = {}; tanques.forEach(t => fasesCount[t.fase] = (fasesCount[t.fase] || 0) + 1);
             if (chartFasesInst) chartFasesInst.destroy();
             chartFasesInst = new Chart(ctx2, {
                 type: 'doughnut',
-                data: {
-                    labels: Object.keys(fasesCount).length ? Object.keys(fasesCount) : ['Nenhuma'],
-                    datasets: [{
-                        data: Object.values(fasesCount).length ? Object.values(fasesCount) : [1],
-                        backgroundColor: ['#239c7e', '#176b55', '#0e4134', '#a7f3d0']
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: { legend: { position: 'bottom' } }
-                }
-            });
-
-            // Chart 3: Evolução Histórica
-            const ctx3 = $('chartHistorico').getContext('2d');
-            const ultimos = historico.slice(0, 10).reverse();
-            const labelsHist = ultimos.map(h => h.tanque);
-            const dataHistRacao = ultimos.map(h => (h.diariaGrams / 1000).toFixed(2));
-
-            if (chartHistoricoInst) chartHistoricoInst.destroy();
-            chartHistoricoInst = new Chart(ctx3, {
-                type: 'line',
-                data: {
-                    labels: labelsHist.length ? labelsHist : ['Sem registros'],
-                    datasets: [{
-                        label: 'Ração Diária (kg)',
-                        data: dataHistRacao.length ? dataHistRacao : [0],
-                        borderColor: '#239c7e',
-                        backgroundColor: 'rgba(35, 156, 126, 0.1)',
-                        fill: true,
-                        tension: 0.3
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: { legend: { display: false } },
-                    scales: { y: { beginAtZero: true } }
-                }
+                data: { labels: Object.keys(fasesCount), datasets: [{ data: Object.values(fasesCount), backgroundColor: ['#239c7e', '#176b55', '#0e4134'] }] },
+                options: { responsive: true, maintainAspectRatio: false }
             });
         }
     </script>
 </body>
 </html>
-.history-summary div{margin:3px 0}
-.history-actions{display:flex;gap:8px;margin-top:10px}
-.history-actions button{min-height:38px;padding:8px 11px;font-size:.86rem}
-.danger{background:#fbe9e7;color:#922b21}
-.history-empty{font-size:.9rem;color:var(--muted);line-height:1.5}
-
-@media(min-width:420px){body{padding-top:28px}.brand{padding:26px}}
-</style>
-</head>
-<body><main>
-<header class="brand"><div class="eyebrow">Samaria · Aquicultura</div><h1>Calculadora de Ração</h1><p>Estimativa baseada na tabela alimentar fornecida.</p></header>
-<section class="card"><h2>Dados do lote</h2>
-<label for="tanque">Nome ou identificação do tanque</label><input id="tanque" type="text" maxlength="80" placeholder="Ex.: TE12, Tanque 3 (opcional)">
-<label for="quantidade">Quantidade de peixes</label><input id="quantidade" type="number" inputmode="numeric" min="1" step="1" placeholder="Ex.: 1000">
-<label for="peso">Peso total (gramas)</label><input id="peso" type="text" inputmode="decimal" placeholder="Ex.: 1800">
-<label for="tratos">Tratos por dia</label><input id="tratos" type="number" inputmode="numeric" min="1" step="1" placeholder="Ex.: 4">
-<button class="primary" id="calcular">Calcular ração</button><div class="error" id="erro" role="alert"></div>
-</section>
-<section class="card rate-choice" id="decisaoTaxa" aria-live="polite">
-<h2>Taxa de alimentação</h2>
-<p id="perguntaTaxa">A tabela recomenda uma taxa de —. Deseja utilizá-la?</p>
-<div class="rate-actions"><button class="primary" id="usarTaxa" style="margin-top:0">Sim, usar a taxa</button><button class="secondary" id="trocarTaxa">Usar outra taxa</button></div>
-<div class="rate-custom" id="taxaPersonalizada">
-<label for="novaTaxa">Digite a taxa desejada (%)</label><input id="novaTaxa" type="text" inputmode="decimal" placeholder="Ex.: 10">
-<p class="note">Informe somente o número da porcentagem. A ração será recalculada com essa taxa.</p>
-<button class="primary" id="aplicarTaxa" style="margin-top:0">Calcular com esta taxa</button>
-</div>
-<div class="error" id="erroTaxa" role="alert"></div>
-</section>
-<section class="card result" id="resultado" aria-live="polite"><h2>Resultado</h2>
-<div class="details" style="margin-top:0;margin-bottom:12px"><div><b>Tanque:</b> <span id="nomeTanque">Não identificado</span></div></div>
-<div class="result-top"><small>Ração recomendada por dia</small><div class="big" id="diaria">—</div></div>
-<div class="stats"><div class="stat"><span>Por trato</span><strong id="porTrato">—</strong></div><div class="stat"><span>Taxa utilizada</span><strong id="taxa">—</strong></div><div class="stat"><span>Peso médio por peixe</span><strong id="medio">—</strong></div><div class="stat"><span>Número de tratos</span><strong id="numTratos">—</strong></div></div>
-<div class="details"><div><b>Fase:</b> <span id="fase"></span></div><div><b>Característica da ração:</b> <span id="caracteristica"></span></div><div><b>Faixa de peso na tabela:</b> <span id="faixa"></span></div></div>
-<div class="actions"><button class="secondary" id="novo">Novo cálculo</button><button class="secondary" id="info">Informações</button></div>
-</section>
-
-<section class="card" id="historicoCard">
-<h2>Histórico de cálculos</h2>
-<p class="note">Os cálculos concluídos ficam salvos neste navegador e neste aparelho. O nome do tanque aparece primeiro em cada registro.</p>
-<div id="historico" class="history-list"><p class="history-empty">Nenhum cálculo salvo ainda.</p></div>
-<div class="actions"><button class="secondary" id="exportarHistorico">Exportar histórico</button><button class="danger" id="limparHistorico">Apagar histórico</button></div>
-<p class="note">O histórico não é sincronizado automaticamente com outros celulares ou navegadores. Exporte uma cópia se precisar guardá-lo.</p>
-</section>
-
-<section class="card"><h2>Importante</h2><p class="note">O resultado segue a taxa e as faixas da planilha alimentar da Samaria incorporadas nesta versão. A tabela considera condições ideais. Confirme se a espécie, a fase e as condições de cultivo correspondem ao seu lote; esta ferramenta não substitui a orientação técnica.</p></section>
-<div class="footer">Calculadora de Ração · versão inicial para testes</div>
-</main>
-<script>
-const tabela = [{"minimo": 0.5, "maximo": 1.5, "caracteristica": "Pó", "fase": "Inicial", "taxa": 14}, {"minimo": 1.5, "maximo": 3, "caracteristica": "Ext. (1,2mm)", "fase": "Inicial", "taxa": 13}, {"minimo": 3, "maximo": 5.5, "caracteristica": "Ext. (1,2mm)", "fase": "Inicial", "taxa": 12}, {"minimo": 5.5, "maximo": 9, "caracteristica": "Ext. (1,8mm)", "fase": "Inicial", "taxa": 11}, {"minimo": 9, "maximo": 15, "caracteristica": "Ext. (1,8mm)", "fase": "Inicial", "taxa": 10}, {"minimo": 15, "maximo": 23, "caracteristica": "Ext. (2-3mm)", "fase": "Inicial", "taxa": 9}, {"minimo": 23, "maximo": 33, "caracteristica": "Ext. (2-3mm)", "fase": "Juvenil", "taxa": 7}, {"minimo": 33, "maximo": 45, "caracteristica": "Ext. (2-3mm)", "fase": "Juvenil", "taxa": 6}, {"minimo": 45, "maximo": 60, "caracteristica": "Ext. (3-4mm)", "fase": "Juvenil", "taxa": 5.5}, {"minimo": 60, "maximo": 80, "caracteristica": "Ext. (3-4mm)", "fase": "Juvenil", "taxa": 5}, {"minimo": 80, "maximo": 105, "caracteristica": "Ext. (3-4mm)", "fase": "Juvenil", "taxa": 4.8}, {"minimo": 105, "maximo": 135, "caracteristica": "Ext. (4-6mm)", "fase": "Crescimento", "taxa": 4.6}, {"minimo": 135, "maximo": 170, "caracteristica": "Ext. (4-6mm)", "fase": "Crescimento", "taxa": 4.2}, {"minimo": 170, "maximo": 210, "caracteristica": "Ext. (4-6mm)", "fase": "Crescimento", "taxa": 3.8}, {"minimo": 210, "maximo": 255, "caracteristica": "Ext. (4-6mm)", "fase": "Crescimento", "taxa": 3.6}, {"minimo": 255, "maximo": 305, "caracteristica": "Ext. (4-6mm)", "fase": "Crescimento", "taxa": 3.4}, {"minimo": 305, "maximo": 355, "caracteristica": "Ext. (4-6mm)", "fase": "Crescimento", "taxa": 3}, {"minimo": 355, "maximo": 405, "caracteristica": "Ext. (4-6mm)", "fase": "Crescimento", "taxa": 2.7}, {"minimo": 405, "maximo": 455, "caracteristica": "Ext. (4-6mm)", "fase": "Crescimento", "taxa": 2.5}, {"minimo": 455, "maximo": 505, "caracteristica": "Ext. (4-6mm)", "fase": "Crescimento", "taxa": 2.4}, {"minimo": 505, "maximo": 555, "caracteristica": "Ext. (4-6mm)", "fase": "Crescimento", "taxa": 2.2}, {"minimo": 555, "maximo": 605, "caracteristica": "Ext. (6-8mm)", "fase": "Engorda", "taxa": 2.1}, {"minimo": 605, "maximo": 655, "caracteristica": "Ext. (6-8mm)", "fase": "Engorda", "taxa": 2}, {"minimo": 655, "maximo": 705, "caracteristica": "Ext. (6-8mm)", "fase": "Engorda", "taxa": 1.8}, {"minimo": 705, "maximo": 755, "caracteristica": "Ext. (6-8mm)", "fase": "Engorda", "taxa": 1.7}, {"minimo": 755, "maximo": 805, "caracteristica": "Ext. (6-8mm)", "fase": "Engorda", "taxa": 1.6}, {"minimo": 805, "maximo": 855, "caracteristica": "Ext. (6-8mm)", "fase": "Engorda", "taxa": 1.5}, {"minimo": 855, "maximo": 905, "caracteristica": "Ext. (6-8mm)", "fase": "Engorda", "taxa": 1.4}, {"minimo": 905, "maximo": 955, "caracteristica": "Ext. (6-8mm)", "fase": "Engorda", "taxa": 1.4}, {"minimo": 955, "maximo": 1005, "caracteristica": "Ext. (6-8mm)", "fase": "Engorda", "taxa": 1.3}, {"minimo": 1005, "maximo": 1055, "caracteristica": "Ext. (6-8mm)", "fase": "Engorda", "taxa": 1.25}, {"minimo": 1055, "maximo": 1105, "caracteristica": "Ext. (6-8mm)", "fase": "Engorda", "taxa": 1.2}];
-const $ = id => document.getElementById(id);
-const fmt = n => n.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
-let calculoPendente = null;
-function mostrarErro(msg){$('erro').textContent=msg;$('erro').classList.add('show');$('resultado').classList.remove('show');$('decisaoTaxa').classList.remove('show')}
-function calcular(){
- $('erro').classList.remove('show'); $('erroTaxa').classList.remove('show');
- const quantidade=Number($('quantidade').value.trim());
- const pesoTexto=$('peso').value.trim().replace(/\s/g,'').replace(',','.');
- const pesoTotal=Number(pesoTexto);
- const tratos=Number($('tratos').value.trim());
- if(!Number.isInteger(quantidade)||quantidade<=0||!Number.isFinite(pesoTotal)||pesoTotal<=0||!Number.isInteger(tratos)||tratos<=0){mostrarErro('Informe quantidade, peso total e tratos por dia com valores numéricos válidos maiores que zero.');return}
- const medio=pesoTotal/quantidade;
- const rec=tabela.find(x=>medio>=x.minimo&&medio<x.maximo);
- if(!rec){mostrarErro(`A tabela não possui uma faixa para o peso médio de ${fmt(medio)} g. Confira os limites da tabela.`);return}
- if(typeof rec.taxa!=='number'||rec.taxa<=0){mostrarErro('A taxa de alimentação não foi encontrada corretamente na tabela.');return}
- calculoPendente={quantidade,pesoTotal,tratos,medio,rec,tanque:$('tanque').value.trim()||'Não identificado'};
- $('resultado').classList.remove('show');
- $('perguntaTaxa').textContent=`Para o tanque ${calculoPendente.tanque}, o peso médio é ${fmt(medio)} g por peixe. A tabela recomenda ${String(rec.taxa).replace('.',',')}% de alimentação. Deseja usar essa porcentagem?`;
- $('usarTaxa').textContent=`Sim, usar ${String(rec.taxa).replace('.',',')}%`;
- $('taxaPersonalizada').classList.remove('show'); $('erroTaxa').classList.remove('show'); $('novaTaxa').value='';
- $('decisaoTaxa').classList.add('show'); $('decisaoTaxa').scrollIntoView({behavior:'smooth',block:'start'});
-}
-function mostrarResultado(taxaUsada, origem){
- if(!calculoPendente)return;
- if(calculoPendente.salvo)return;
- calculoPendente.salvo=true;
- const {pesoTotal,tratos,medio,rec,tanque}=calculoPendente;
- const diaria=pesoTotal*taxaUsada/100; const porTrato=diaria/tratos;
- $('nomeTanque').textContent=tanque;
- $('diaria').textContent=fmt(diaria)+' g';$('porTrato').textContent=fmt(porTrato)+' g';$('taxa').textContent=String(taxaUsada).replace('.',',')+'%';$('medio').textContent=fmt(medio)+' g';$('numTratos').textContent=String(tratos);$('fase').textContent=rec.fase??'Não informada';$('caracteristica').textContent=rec.caracteristica??'Não informada';$('faixa').textContent=fmt(rec.minimo)+' a '+fmt(rec.maximo)+' g';
- let origemEl=document.getElementById('origemTaxa');
- if(!origemEl){origemEl=document.createElement('div');origemEl.id='origemTaxa';origemEl.className='note';$('taxa').parentElement.appendChild(origemEl)}
- origemEl.textContent=origem;
- $('decisaoTaxa').classList.remove('show');$('resultado').classList.add('show');registrarCalculo(taxaUsada);$('resultado').scrollIntoView({behavior:'smooth',block:'start'});
-}
-$('usarTaxa').addEventListener('click',()=>{if(calculoPendente)mostrarResultado(calculoPendente.rec.taxa,'Taxa recomendada pela tabela Samaria.')});
-$('trocarTaxa').addEventListener('click',()=>{$('taxaPersonalizada').classList.add('show');$('erroTaxa').classList.remove('show');$('novaTaxa').focus()});
-$('aplicarTaxa').addEventListener('click',()=>{
- const texto=$('novaTaxa').value.trim().replace(/\s/g,'').replace(',','.');
- const taxa=Number(texto);
- if(!texto||!Number.isFinite(taxa)||taxa<=0||taxa>100){$('erroTaxa').textContent='Digite uma porcentagem maior que 0 e menor ou igual a 100.';$('erroTaxa').classList.add('show');return}
- mostrarResultado(taxa,`Taxa personalizada informada pelo usuário (a tabela recomendava ${String(calculoPendente.rec.taxa).replace('.',',')}%).`);
-});
-$('calcular').addEventListener('click',calcular);
-['quantidade','peso','tratos'].forEach(id=>$(id).addEventListener('keydown',e=>{if(e.key==='Enter')calcular()}));
-$('novo').addEventListener('click',()=>{['tanque','quantidade','peso','tratos','novaTaxa'].forEach(id=>$(id).value='');$('resultado').classList.remove('show');$('decisaoTaxa').classList.remove('show');$('taxaPersonalizada').classList.remove('show');$('erro').classList.remove('show');$('erroTaxa').classList.remove('show');calculoPendente=null;$('quantidade').focus();window.scrollTo({top:0,behavior:'smooth'})});
-$('info').addEventListener('click',()=>alert('A taxa é consultada pela faixa de peso médio individual na tabela da Samaria. O cálculo é: peso total × taxa (%) ÷ 100. A ração por trato é a ração diária dividida pelo número de tratos. Confira sempre a recomendação técnica e as condições reais do cultivo.'));
-
-const CHAVE_HISTORICO='samaria_calculadora_historico_v1';
-function lerHistorico(){try{const dados=JSON.parse(localStorage.getItem(CHAVE_HISTORICO)||'[]');return Array.isArray(dados)?dados:[]}catch(e){return []}}
-function salvarHistorico(lista){try{localStorage.setItem(CHAVE_HISTORICO,JSON.stringify(lista));return true}catch(e){alert('Não foi possível salvar o histórico neste navegador. Verifique as configurações de armazenamento.');return false}}
-function escaparHtml(valor){return String(valor??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-function renderizarHistorico(){
- const lista=lerHistorico(),area=$('historico');
- if(!lista.length){area.innerHTML='<p class="history-empty">Nenhum cálculo salvo ainda. Os registros aparecerão aqui após concluir um cálculo.</p>';return}
- area.innerHTML=lista.map(item=>`<article class="history-item"><div class="history-tank">${escaparHtml(item.tanque||'Tanque não identificado')}</div><div class="history-meta">${escaparHtml(item.data||'Data não disponível')}</div><div class="history-summary"><div><b>Ração por dia:</b> ${escaparHtml(item.diaria)} g</div><div><b>Ração por trato:</b> ${escaparHtml(item.porTrato)} g</div><div><b>Taxa utilizada:</b> ${escaparHtml(item.taxa)}% ${item.personalizada?'(personalizada)':'(tabela Samaria)'}</div><div><b>Peixes:</b> ${escaparHtml(item.quantidade)} · <b>Peso total:</b> ${escaparHtml(item.pesoTotal)} g</div><div><b>Tratos por dia:</b> ${escaparHtml(item.tratos)} · <b>Peso médio:</b> ${escaparHtml(item.medio)} g</div></div><div class="history-actions"><button class="secondary" data-repetir="${escaparHtml(item.id)}">Reutilizar dados</button><button class="danger" data-excluir="${escaparHtml(item.id)}">Excluir</button></div></article>`).join('');
- area.querySelectorAll('[data-excluir]').forEach(btn=>btn.addEventListener('click',()=>{const id=btn.getAttribute('data-excluir');if(!confirm('Excluir este registro do histórico?'))return;salvarHistorico(lerHistorico().filter(item=>item.id!==id));renderizarHistorico()}));
- area.querySelectorAll('[data-repetir]').forEach(btn=>btn.addEventListener('click',()=>{const item=lerHistorico().find(x=>x.id===btn.getAttribute('data-repetir'));if(!item)return;$('tanque').value=item.tanque==='Não identificado'?'':item.tanque;$('quantidade').value=item.quantidade;$('peso').value=String(item.pesoTotal).replace('.',',');$('tratos').value=item.tratos;$('resultado').classList.remove('show');$('decisaoTaxa').classList.remove('show');window.scrollTo({top:0,behavior:'smooth'})}));
-}
-function registrarCalculo(taxaUsada){
- if(!calculoPendente)return;const p=calculoPendente,diaria=p.pesoTotal*taxaUsada/100,lista=lerHistorico(),agora=new Date();
- const registro={id:Date.now().toString(36)+Math.random().toString(36).slice(2,8),tanque:p.tanque,data:agora.toLocaleDateString('pt-BR')+' '+agora.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'}),quantidade:p.quantidade,pesoTotal:Number(p.pesoTotal.toFixed(4)),tratos:p.tratos,medio:Number(p.medio.toFixed(4)),taxa:Number(taxaUsada.toFixed(4)),personalizada:Math.abs(taxaUsada-p.rec.taxa)>1e-9,diaria:Number(diaria.toFixed(4)),porTrato:Number((diaria/p.tratos).toFixed(4)),fase:p.rec.fase,caracteristica:p.rec.caracteristica};
- lista.unshift(registro);if(salvarHistorico(lista))renderizarHistorico();
-}
-$('limparHistorico').addEventListener('click',()=>{if(!lerHistorico().length){alert('O histórico já está vazio.');return}if(!confirm('Apagar todos os cálculos do histórico deste navegador? Esta ação não pode ser desfeita.'))return;salvarHistorico([]);renderizarHistorico()});
-$('exportarHistorico').addEventListener('click',()=>{const lista=lerHistorico();if(!lista.length){alert('Não há registros para exportar.');return}const blob=new Blob([JSON.stringify(lista,null,2)],{type:'application/json;charset=utf-8'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='historico-calculadora-samaria.json';a.click();URL.revokeObjectURL(url)});
-renderizarHistorico();
-
-</script></body></html>
