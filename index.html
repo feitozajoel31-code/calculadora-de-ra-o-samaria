@@ -286,7 +286,40 @@
     </main>
 
     <script>
-        const tabela = [{"minimo":0.5,"maximo":1.5,"caracteristica":"Pó","fase":"Inicial","taxa":14},{"minimo":1.5,"maximo":3,"caracteristica":"Ext. (1,2mm)","fase":"Inicial","taxa":13},{"minimo":3,"maximo":5.5,"caracteristica":"Ext. (1,2mm)","fase":"Inicial","taxa":12},{"minimo":5.5,"maximo":9,"caracteristica":"Ext. (1,8mm)","fase":"Inicial","taxa":11},{"minimo":9,"maximo":15,"caracteristica":"Ext. (1,8mm)","fase":"Inicial","taxa":10},{"minimo":15,"maximo":23,"caracteristica":"Ext. (2-3mm)","fase":"Inicial","taxa":9},{"minimo":23,"maximo":33,"caracteristica":"Ext. (2-3mm)","fase":"Juvenil","taxa":7},{"minimo":33,"maximo":45,"caracteristica":"Ext. (2-3mm)","fase":"Juvenil","taxa":6},{"minimo":45,"maximo":60,"caracteristica":"Ext. (3-4mm)","fase":"Juvenil","taxa":5.5},{"minimo":60,"maximo":80,"caracteristica":"Ext. (3-4mm)","fase":"Juvenil","taxa":5},{"minimo":80,"maximo":105,"caracteristica":"Ext. (3-4mm)","fase":"Juvenil","taxa":4.8},{"minimo":105,"maximo":135,"caracteristica":"Ext. (4-6mm)","fase":"Crescimento","taxa":4.6},{"minimo":135,"maximo":170,"caracteristica":"Ext. (4-6mm)","fase":"Crescimento","taxa":4.2},{"minimo":170,"maximo":210,"caracteristica":"Ext. (4-6mm)","fase":"Crescimento","taxa":3.8},{"minimo":210,"maximo":255,"caracteristica":"Ext. (4-6mm)","fase":"Crescimento","taxa":3.6},{"minimo":255,"maximo":305,"caracteristica":"Ext. (4-6mm)","fase":"Crescimento","taxa":3.4},{"minimo":305,"maximo":355,"caracteristica":"Ext. (4-6mm)","fase":"Crescimento","taxa":3},{"minimo":355,"maximo":405,"caracteristica":"Ext. (4-6mm)","fase":"Crescimento","taxa":2.7},{"minimo":405,"maximo":455,"caracteristica":"Ext. (4-6mm)","fase":"Crescimento","taxa":2.5},{"minimo":455,"maximo":505,"caracteristica":"Ext. (4-6mm)","fase":"Crescimento","taxa":2.4},{"minimo":505,"maximo":555,"caracteristica":"Ext. (4-6mm)","fase":"Crescimento","taxa":2.2},{"minimo":555,"maximo":605,"caracteristica":"Ext. (6-8mm)","fase":"Engorda","taxa":2.1},{"minimo":605,"maximo":655,"caracteristica":"Ext. (6-8mm)","fase":"Engorda","taxa":2},{"minimo":655,"maximo":705,"caracteristica":"Ext. (6-8mm)","fase":"Engorda","taxa":1.8},{"minimo":705,"maximo":755,"caracteristica":"Ext. (6-8mm)","fase":"Engorda","taxa":1.7},{"minimo":755,"maximo":805,"caracteristica":"Ext. (6-8mm)","fase":"Engorda","taxa":1.6},{"minimo":805,"maximo":855,"caracteristica":"Ext. (6-8mm)","fase":"Engorda","taxa":1.5},{"minimo":855,"maximo":905,"caracteristica":"Ext. (6-8mm)","fase":"Engorda","taxa":1.4},{"minimo":905,"maximo":955,"caracteristica":"Ext. (6-8mm)","fase":"Engorda","taxa":1.4},{"minimo":955,"maximo":1005,"caracteristica":"Ext. (6-8mm)","fase":"Engorda","taxa":1.3},{"minimo":1005,"maximo":1055,"caracteristica":"Ext. (6-8mm)","fase":"Engorda","taxa":1.25},{"minimo":1055,"maximo":1105,"caracteristica":"Ext. (6-8mm)","fase":"Engorda","taxa":1.2}];
+        const tabela = [
+            {"minimo":0.5,"maximo":1.5,"caracteristica":"Pó","fase":"Inicial","taxa":14},
+            {"minimo":1.5,"maximo":3,"caracteristica":"Ext. (1,2mm)","fase":"Inicial","taxa":13},
+            {"minimo":3,"maximo":5.5,"caracteristica":"Ext. (1,2mm)","fase":"Inicial","taxa":12},
+            {"minimo":5.5,"maximo":9,"caracteristica":"Ext. (1,8mm)","fase":"Inicial","taxa":11},
+            {"minimo":9,"maximo":15,"caracteristica":"Ext. (1,8mm)","fase":"Inicial","taxa":10},
+            {"minimo":15,"maximo":23,"caracteristica":"Ext. (2-3mm)","fase":"Inicial","taxa":9},
+            {"minimo":23,"maximo":33,"caracteristica":"Ext. (2-3mm)","fase":"Juvenil","taxa":7},
+            {"minimo":33,"maximo":45,"caracteristica":"Ext. (2-3mm)","fase":"Juvenil","taxa":6},
+            {"minimo":45,"maximo":60,"caracteristica":"Ext. (3-4mm)","fase":"Juvenil","taxa":5.5},
+            {"minimo":60,"maximo":80,"caracteristica":"Ext. (3-4mm)","fase":"Juvenil","taxa":5},
+            {"minimo":80,"maximo":105,"caracteristica":"Ext. (3-4mm)","fase":"Juvenil","taxa":4.8},
+            {"minimo":105,"maximo":135,"caracteristica":"Ext. (4-6mm)","fase":"Crescimento","taxa":4.6},
+            {"minimo":135,"maximo":170,"caracteristica":"Ext. (4-6mm)","fase":"Crescimento","taxa":4.2},
+            {"minimo":170,"maximo":210,"caracteristica":"Ext. (4-6mm)","fase":"Crescimento","taxa":3.8},
+            {"minimo":210,"maximo":255,"caracteristica":"Ext. (4-6mm)","fase":"Crescimento","taxa":3.6},
+            {"minimo":255,"maximo":305,"caracteristica":"Ext. (4-6mm)","fase":"Crescimento","taxa":3.4},
+            {"minimo":305,"maximo":355,"caracteristica":"Ext. (4-6mm)","fase":"Crescimento","taxa":3},
+            {"minimo":355,"maximo":405,"caracteristica":"Ext. (4-6mm)","fase":"Crescimento","taxa":2.7},
+            {"minimo":405,"maximo":455,"caracteristica":"Ext. (4-6mm)","fase":"Crescimento","taxa":2.5},
+            {"minimo":455,"maximo":505,"caracteristica":"Ext. (4-6mm)","fase":"Crescimento","taxa":2.4},
+            {"minimo":505,"maximo":555,"caracteristica":"Ext. (4-6mm)","fase":"Crescimento","taxa":2.2},
+            {"minimo":555,"maximo":605,"caracteristica":"Ext. (6-8mm)","fase":"Engorda","taxa":2.1},
+            {"minimo":605,"maximo":655,"caracteristica":"Ext. (6-8mm)","fase":"Engorda","taxa":2},
+            {"minimo":655,"maximo":705,"caracteristica":"Ext. (6-8mm)","fase":"Engorda","taxa":1.8},
+            {"minimo":705,"maximo":755,"caracteristica":"Ext. (6-8mm)","fase":"Engorda","taxa":1.7},
+            {"minimo":755,"maximo":805,"caracteristica":"Ext. (6-8mm)","fase":"Engorda","taxa":1.6},
+            {"minimo":805,"maximo":855,"caracteristica":"Ext. (6-8mm)","fase":"Engorda","taxa":1.5},
+            {"minimo":855,"maximo":905,"caracteristica":"Ext. (6-8mm)","fase":"Engorda","taxa":1.4},
+            {"minimo":905,"maximo":955,"caracteristica":"Ext. (6-8mm)","fase":"Engorda","taxa":1.4},
+            {"minimo":955,"maximo":1005,"caracteristica":"Ext. (6-8mm)","fase":"Engorda","taxa":1.3},
+            {"minimo":1005,"maximo":1055,"caracteristica":"Ext. (6-8mm)","fase":"Engorda","taxa":1.25},
+            {"minimo":1055,"maximo":1105,"caracteristica":"Ext. (6-8mm)","fase":"Engorda","taxa":1.2}
+        ];
 
         const CHAVE_HISTORICO = 'samaria_calculadora_historico_v2';
         const CHAVE_TANQUES = 'samaria_tanques_ativos_v1';
@@ -310,7 +343,7 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            $('btnMobileMenu')?.addEventListener('click', () =>$('sidebar').classList.toggle('hidden'));
+            $('btnMobileMenu')?.addEventListener('click', () => $('sidebar').classList.toggle('hidden'));
             document.querySelectorAll('.nav-btn').forEach(btn => {
                 btn.addEventListener('click', () => {
                     switchTab(btn.getAttribute('data-target'));
@@ -318,7 +351,6 @@
                 });
             });
 
-            // Tecla ENTER nos campos de entrada
             ['tanque', 'quantidade', 'peso', 'tratos', 'novaTaxa'].forEach(id => {
                 $(id)?.addEventListener('keydown', e => {
                     if (e.key === 'Enter') {
@@ -331,14 +363,13 @@
                 });
             });
 
-            // Busca no Histórico
             $('buscaHistorico')?.addEventListener('input', e => {
                 renderizarHistorico(e.target.value.trim());
             });
 
-            // Exportações e Limpeza
             $('exportarJson')?.addEventListener('click', exportarJSON);
-            $('exportarCsv')?.addEventListener('click', exportarCSV);$('limparHistorico')?.addEventListener('click', limparHistorico);
+            $('exportarCsv')?.addEventListener('click', exportarCSV);
+            $('limparHistorico')?.addEventListener('click', limparHistorico);
 
             renderizarTabelaRef();
             renderizarHistorico();
@@ -377,9 +408,11 @@
             if (!rec) { $('erro').textContent = `Peso médio de ${fmt(medio)}g fora da faixa da tabela.`; $('erro').classList.remove('hidden'); return; }
 
             calculoPendente = { quantidade, pesoTotal, tratos, medio, rec, tanque: $('tanque').value.trim() || 'Não identificado', salvo: false };
-            $('resultado').classList.add('hidden');$('perguntaTaxa').innerHTML = `Tanque <b>${calculoPendente.tanque}</b>: peso médio <b>${fmt(medio)}g</b>. Taxa recomendada: <b>${rec.taxa}%</b>.`;
+            $('resultado').classList.add('hidden');
+            $('perguntaTaxa').innerHTML = `Tanque <b>${calculoPendente.tanque}</b>: peso médio <b>${fmt(medio)}g</b>. Taxa recomendada: <b>${rec.taxa}%</b>.`;
             $('usarTaxa').textContent = `Usar ${rec.taxa}%`;
-            $('decisaoTaxa').classList.remove('hidden');$('decisaoTaxa').scrollIntoView({ behavior: 'smooth', block: 'center' });
+            $('decisaoTaxa').classList.remove('hidden');
+            $('decisaoTaxa').scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
 
         function mostrarResultado(taxaUsada) {
@@ -388,16 +421,18 @@
             const diariaGrams = pesoTotal * (taxaUsada / 100);
             const porTratoGrams = diariaGrams / tratos;
 
-            if ($('nomeTanque'))$('nomeTanque').textContent = tanque;
+            if ($('nomeTanque')) $('nomeTanque').textContent = tanque;
             $('diaria').textContent = diariaGrams >= 1000 ? `${fmt(diariaGrams/1000)} kg` : `${fmt(diariaGrams)} g`;
             $('porTrato').textContent = porTratoGrams >= 1000 ? `${fmt(porTratoGrams/1000)} kg` : `${fmt(porTratoGrams)} g`;
             $('taxa').textContent = `${taxaUsada}%`;
             $('medio').textContent = `${fmt(medio)} g`;
-            $('numTratos').textContent = String(tratos);$('fase').textContent = rec.fase;
+            $('numTratos').textContent = String(tratos);
+            $('fase').textContent = rec.fase;
             $('caracteristica').textContent = rec.caracteristica;
             $('faixa').textContent = `${fmt(rec.minimo)} a ${fmt(rec.maximo)} g`;
 
-            $('decisaoTaxa').classList.add('hidden');$('resultado').classList.remove('hidden');
+            $('decisaoTaxa').classList.add('hidden');
+            $('resultado').classList.remove('hidden');
             
             if (!calculoPendente.salvo) {
                 registrarCalculo(taxaUsada);
@@ -408,14 +443,18 @@
         }
 
         $('calcular').addEventListener('click', calcular);
-        $('usarTaxa').addEventListener('click', () => calculoPendente && mostrarResultado(calculoPendente.rec.taxa));$('trocarTaxa').addEventListener('click', () => $('taxaPersonalizada').classList.remove('hidden'));$('aplicarTaxa').addEventListener('click', () => {
+        $('usarTaxa').addEventListener('click', () => calculoPendente && mostrarResultado(calculoPendente.rec.taxa));
+        $('trocarTaxa').addEventListener('click', () => $('taxaPersonalizada').classList.remove('hidden'));
+        $('aplicarTaxa').addEventListener('click', () => {
             const taxa = Number($('novaTaxa').value.replace(',', '.'));
             if (taxa > 0 && taxa <= 100) mostrarResultado(taxa);
         });
 
         $('novo').addEventListener('click', () => {
-            ['tanque', 'quantidade', 'peso', 'tratos', 'novaTaxa'].forEach(id => $(id).value = '');$('resultado').classList.add('hidden');
-            $('decisaoTaxa').classList.add('hidden');$('taxaPersonalizada').classList.add('hidden');
+            ['tanque', 'quantidade', 'peso', 'tratos', 'novaTaxa'].forEach(id => $(id).value = '');
+            $('resultado').classList.add('hidden');
+            $('decisaoTaxa').classList.add('hidden');
+            $('taxaPersonalizada').classList.add('hidden');
             calculoPendente = null;
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
@@ -500,3 +539,75 @@
         }
 
         function limparHistorico() {
+            if (confirm('Tem certeza que deseja apagar todo o histórico de cálculos?')) {
+                salvarHistorico([]);
+                renderizarHistorico();
+            }
+        }
+
+        function renderizarTanques() {
+            const tanques = lerTanques(), grid = $('gridTanques');
+            if (!tanques.length) { grid.innerHTML = `<p class="col-span-full text-slate-400 text-center p-4">Nenhum tanque cadastrado.</p>`; return; }
+            grid.innerHTML = tanques.map(t => {
+                const bio = (t.quantidade * t.pesoMedio) / 1000, rac = bio * (t.taxa / 100);
+                return `
+                <div class="glass-card p-4 rounded-xl space-y-3">
+                    <div class="flex justify-between items-start">
+                        <div><h3 class="font-bold text-brand-900">${t.nome}</h3><span class="text-xs bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full">${t.fase}</span></div>
+                        <button onclick="excluirTanque('${t.id}')" class="text-slate-400 hover:text-red-600"><i class="fa-solid fa-trash"></i></button>
+                    </div>
+                    <div class="grid grid-cols-2 gap-2 text-xs">
+                        <div class="bg-slate-50 p-2 rounded">Peixes: <b>${t.quantidade}</b></div>
+                        <div class="bg-slate-50 p-2 rounded">Peso M.: <b>${t.pesoMedio}g</b></div>
+                        <div class="bg-slate-50 p-2 rounded">Biomassa: <b>${fmt(bio)} kg</b></div>
+                        <div class="bg-slate-50 p-2 rounded">Ração: <b>${fmt(rac)} kg</b></div>
+                    </div>
+                </div>`;
+            }).join('');
+        }
+
+        function excluirTanque(id) { salvarTanques(lerTanques().filter(t => t.id !== id)); renderizarTanques(); atualizarDashboard(); }
+
+        function renderizarTabelaRef() {
+            $('corpoTabelaRef').innerHTML = tabela.map(i => `
+                <tr class="hover:bg-slate-50">
+                    <td class="p-3 font-semibold text-brand-900">${i.fase}</td>
+                    <td class="p-3">${fmt(i.minimo)}g a ${fmt(i.maximo)}g</td>
+                    <td class="p-3 text-slate-600">${i.caracteristica}</td>
+                    <td class="p-3 text-right font-bold text-brand-600">${i.taxa}%</td>
+                </tr>
+            `).join('');
+        }
+
+        function atualizarDashboard() {
+            const tanques = lerTanques();
+            let totalBio = 0, totalRac = 0, somaPesos = 0;
+            tanques.forEach(t => {
+                const bio = (t.quantidade * t.pesoMedio) / 1000;
+                totalBio += bio; totalRac += bio * (t.taxa / 100); somaPesos += t.pesoMedio;
+            });
+            $('kpiBiomassa').textContent = `${fmt(totalBio)} kg`;
+            $('kpiRacaoDiaria').textContent = `${fmt(totalRac)} kg`;
+            $('kpiTanquesAtivos').textContent = tanques.length;
+            $('kpiPesoMedio').textContent = tanques.length ? `${fmt(somaPesos / tanques.length)} g` : '0 g';
+
+            const ctx1 = $('chartRacaoTanque').getContext('2d');
+            if (chartRacaoInst) chartRacaoInst.destroy();
+            chartRacaoInst = new Chart(ctx1, {
+                type: 'bar',
+                data: { labels: tanques.map(t => t.nome), datasets: [{ label: 'Ração (kg)', data: tanques.map(t => ((t.quantidade * t.pesoMedio)/1000)*(t.taxa/100)), backgroundColor: '#176b55' }] },
+                options: { responsive: true, maintainAspectRatio: false }
+            });
+
+            const ctx2 = $('chartFases').getContext('2d');
+            const fasesCount = {}; tanques.forEach(t => fasesCount[t.fase] = (fasesCount[t.fase] || 0) + 1);
+            if (chartFasesInst) chartFasesInst.destroy();
+            chartFasesInst = new Chart(ctx2, {
+                type: 'doughnut',
+                data: { labels: Object.keys(fasesCount), datasets: [{ data: Object.values(fasesCount), backgroundColor: ['#239c7e', '#176b55', '#0e4134'] }] },
+                options: { responsive: true, maintainAspectRatio: false }
+            });
+        }
+    </script>
+</body>
+</html>
