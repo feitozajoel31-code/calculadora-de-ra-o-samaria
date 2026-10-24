@@ -314,6 +314,12 @@
                     if (window.innerWidth < 768) $('sidebar').classList.add('hidden');
                 });
             });
+
+            // Tecla ENTER nos campos de entrada
+            ['tanque', 'quantidade', 'peso', 'tratos'].forEach(id => {
+                $(id)?.addEventListener('keydown', e => { if (e.key === 'Enter') calcular(); });
+            });
+
             renderizarTabelaRef();
             renderizarHistorico();
             renderizarTanques();
@@ -355,6 +361,7 @@
             $('perguntaTaxa').innerHTML = `Tanque <b>${calculoPendente.tanque}</b>: peso médio <b>${fmt(medio)}g</b>. Taxa recomendada: <b>${rec.taxa}%</b>.`;
             $('usarTaxa').textContent = `Usar ${rec.taxa}%`;
             $('decisaoTaxa').classList.remove('hidden');
+            $('decisaoTaxa').scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
 
         function mostrarResultado(taxaUsada) {
@@ -380,6 +387,8 @@
                 registrarCalculo(taxaUsada);
                 calculoPendente.salvo = true;
             }
+
+            $('resultado').scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
 
         $('calcular').addEventListener('click', calcular);
@@ -396,6 +405,7 @@
             $('decisaoTaxa').classList.add('hidden');
             $('taxaPersonalizada').classList.add('hidden');
             calculoPendente = null;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         });
 
         $('salvarTanqueAtivo').addEventListener('click', () => {
